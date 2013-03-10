@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  
+  <xs:include schemaLocation="./common.xsd"></xs:include>
+  
+  <xs:element name="metafile">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="name"/>
+        <xs:element ref="tag"/>
+        <xs:element ref="version"/>
+        <xs:element ref="creationDate"/>
+        <xs:element ref="author"/>
+        <xs:element ref="authorEmail"/>
+        <xs:element ref="authorUrl"/>
+        <xs:element ref="copyright"/>
+        <xs:element ref="license"/>
+        <xs:element ref="description"/>
+        <xs:element ref="metadata"/>
+        <xs:element ref="params"/>
+      </xs:all>
+      <xs:attribute name="client" use="required" type="xs:NCName"/>
+      <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version" type="xs:NMTOKEN"/>
+  <xs:element name="creationDate" type="xs:date"/>
+  <xs:element name="author" type="xs:string"/>
+  <xs:element name="authorEmail" type="xs:string"/>
+  <xs:element name="authorUrl" type="xs:NCName"/>
+  <xs:element name="copyright" type="xs:string"/>
+  <xs:element name="license" type="xs:string"/>
+  
+  
+  <xs:element name="description">
+    <xs:complexType/>
+  </xs:element>
+  
+  
+  <xs:element name="metadata">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="name"/>
+        <xs:element ref="tag"/>
+        <xs:element ref="rtl"/>
+        <xs:element ref="locale"/>
+        <xs:element ref="winCodePage"/>
+        <xs:element ref="backwardLang"/>
+        <xs:element ref="pdfFontName"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="rtl" type="xs:integer"/>
+  <xs:element name="locale" type="xs:string"/>
+  <xs:element name="winCodePage" type="xs:NCName"/>
+  <xs:element name="backwardLang" type="xs:NCName"/>
+  <xs:element name="pdfFontName" type="xs:NCName"/>
+  <xs:element name="params">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="tag" type="xs:NCName"/>
+</xs:schema>

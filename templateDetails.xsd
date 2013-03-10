@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:include schemaLocation="./common.xsd"/>
+
+  <xs:element name="extension">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="name"/>
+        <xs:element ref="creationDate"/>
+        <xs:element ref="author"/>
+        <xs:element ref="authorEmail"/>
+        <xs:element ref="authorUrl"/>
+        <xs:element ref="copyright"/>
+        <xs:element ref="license"/>
+        <xs:element ref="version"/>
+        <xs:element ref="description"/>
+        <xs:element ref="files"/>
+        <xs:element ref="positions"/>
+        <xs:element ref="config"/>
+      </xs:all>
+      <xs:attribute name="method" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+      <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:NCName"/>
+  <xs:element name="creationDate" type="xs:string"/>
+  <xs:element name="author" type="xs:string"/>
+  <xs:element name="authorEmail" type="xs:string"/>
+  <xs:element name="authorUrl" type="xs:anyURI"/>
+  <xs:element name="copyright" type="xs:string"/>
+  <xs:element name="license" type="xs:string"/>
+  <xs:element name="version" type="xs:NMTOKEN"/>
+  <xs:element name="description" type="xs:NCName"/>
+
+
+  <xs:element name="files">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="filename"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="filename" type="xs:NCName"/>
+
+  <xs:element name="positions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="position"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="position" type="xs:NCName"/>
+
+
+</xs:schema>

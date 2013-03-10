@@ -1,4 +1,4 @@
 joomla-xsd
 ==========
 
-Schema Validation for Joomla Extensions
+Schema Validation for Joomla 2.5 Extensions

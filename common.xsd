@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"> 
+
+    <xs:element name="update">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="schemas"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="schemas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="schemapath" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="schemapath">
+        <xs:complexType mixed="true">
+            <xs:attribute name="type" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+  
+    
+    <xs:element name="languages">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="language"/>
+            </xs:sequence>
+            <xs:attribute name="folder" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="language">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string"> <!-- todo define a type filepath --> 
+                    <xs:attribute name="tag" use="required" type="xs:string"/> <!-- todo define all locale --> 
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+   
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="fields"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fields">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fieldset"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fieldset">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="field">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="option"/>
+            </xs:sequence>
+            <xs:attribute name="class" type="xs:NMTOKEN"/>
+            <xs:attribute name="cols" type="xs:integer"/>
+            <xs:attribute name="default"/>
+            <xs:attribute name="description" type="xs:NCName"/>
+            <xs:attribute name="key_field" type="xs:NCName"/>
+            <xs:attribute name="label" type="xs:NCName"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="query"/>
+            <xs:attribute name="rows" type="xs:integer"/>
+            <xs:attribute name="size" type="xs:integer"/>
+            <xs:attribute name="type" use="required" type="xs:NCName"/>
+            <xs:attribute name="value_field" type="xs:NCName"/>
+            <xs:attribute name="value" use="optional" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="option">
+        <xs:complexType mixed="true">
+            <xs:attribute name="value" use="required" type="xs:NMTOKEN"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="sql">
+        <xs:sequence>
+            <xs:element ref="sql"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="sql">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="file"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+        
+    <xs:element name="file">
+        <xs:complexType mixed="true">
+            <xs:attribute name="charset" use="required" type="xs:NCName"/>
+            <xs:attribute name="driver" use="required" type="xs:NCName"/>
+            <xs:attribute name="folder" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="folder" type="xs:string"/> <!-- todo could be a filepath --> 
+
+</xs:schema>
