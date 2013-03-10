@@ -3,10 +3,7 @@
 
     <xs:simpleType name="method">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                The default value install will be also used if the method attribute is not used. The install value means the installer will gracefully stop if
-                it finds any existing file/folder of the new extension.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> The default value install will be also used if the method attribute is not used. The install value means the installer will gracefully stop if it finds any existing file/folder of the new extension. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="install"/>
@@ -16,9 +13,7 @@
 
     <xs:simpleType name="type">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                This attribute describes the type of the extension for the installer. Based on this type further requirements to sub-tags apply.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> This attribute describes the type of the extension for the installer. Based on this type further requirements to sub-tags apply. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="component"/>
@@ -32,11 +27,9 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="version">
+    <xs:simpleType name="cmsversion">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                String that identifies the version of Joomla for which this extension is developed.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> String that identifies the version of Joomla for which this extension is developed. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:decimal">
             <xs:enumeration value="1.6"/>
@@ -45,11 +38,19 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="version">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"> String that identifies the version of your extension. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[.0-9]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
     <xs:simpleType name="client">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                The client attribute allows you to specify for which application client the new module is available.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> The client attribute allows you to specify for which application client the new module is available. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="site"/>
@@ -57,25 +58,62 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:element name="update">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="schemas"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="schemas">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="schemapath" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+
+    <xs:complexType name="submenu">
+        <xs:sequence>
+            <xs:element name="menu" type="menu" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="menu">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="img"/>
+                <xs:attribute name="link" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="administration">
+        <xs:all>
+            <xs:element name="menu" type="menu"/>
+            <xs:element name="submenu" type="submenu"/>
+            <xs:element name="files" type="files"/>
+            <xs:element name="languages" type="languages"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="updateservers">
+        <xs:sequence>
+            <xs:element name="server" maxOccurs="unbounded" type="server"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="server">
+        <xs:simpleContent>
+            <xs:extension base="xs:anyURI">
+                <xs:attribute name="name" use="required"/>
+                <xs:attribute name="priority" use="required" type="xs:integer"/>
+                <xs:attribute name="type" use="required" type="xs:NCName"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="update">
+        <xs:sequence>
+            <xs:element name="schemas" type="schemas"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="schemas">
+        <xs:sequence>
+            <xs:element ref="schemapath" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="schemapath">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                This defines the directory that contains SQL files for component incremental database updates. You may choose to put the SQL files somewhere
-                else in your component release, but make sure their location is documented here.
+            <xs:documentation xml:lang="en"> This defines the directory that contains SQL files for component incremental database updates. You may choose to put the SQL files somewhere else in your component release, but make sure their location is documented here.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType mixed="true">
@@ -83,74 +121,66 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:complexType name="languages">
+        <xs:sequence>
+            <xs:element name="language" type="language" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="folder" type="xs:string"/>
+    </xs:complexType>
 
-    <xs:element name="languages">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" ref="language"/>
-            </xs:sequence>
-            <xs:attribute name="folder" type="xs:NCName"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="language">
-        <xs:complexType>
-            <xs:simpleContent>
-                <xs:extension base="xs:string"> <!-- todo define a type filepath -->
-                    <xs:attribute name="tag" use="required" type="xs:string"/>
-                    <!-- todo define all locale -->
-                </xs:extension>
-            </xs:simpleContent>
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="language">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <!-- todo define a type filepath -->
+                <xs:attribute name="tag" use="required" type="xs:string"/>
+                <!-- todo define all locale -->
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
-    <xs:element name="config">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="fields"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="fields">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" ref="fieldset"/>
-            </xs:sequence>
-            <xs:attribute name="name" use="required" type="xs:NCName"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="fieldset">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" ref="field"/>
-            </xs:sequence>
-            <xs:attribute name="name" use="required" type="xs:NCName"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="field">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element minOccurs="0" maxOccurs="unbounded" ref="option"/>
-            </xs:sequence>
-            <xs:attribute name="class" type="xs:NMTOKEN"/>
-            <xs:attribute name="cols" type="xs:integer"/>
-            <xs:attribute name="default"/>
-            <xs:attribute name="description" type="xs:NCName"/>
-            <xs:attribute name="key_field" type="xs:NCName"/>
-            <xs:attribute name="label" type="xs:NCName"/>
-            <xs:attribute name="name" use="required" type="xs:NCName"/>
-            <xs:attribute name="query"/>
-            <xs:attribute name="rows" type="xs:integer"/>
-            <xs:attribute name="size" type="xs:integer"/>
-            <xs:attribute name="type" use="required" type="xs:NCName"/>
-            <xs:attribute name="value_field" type="xs:NCName"/>
-            <xs:attribute name="value" use="optional" type="xs:boolean"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="option">
-        <xs:complexType mixed="true">
-            <xs:attribute name="value" use="required" type="xs:NMTOKEN"/>
-        </xs:complexType>
-    </xs:element>
+
+    <xs:complexType name="config">
+        <xs:sequence>
+            <xs:element name="fields" type="fields"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="fields">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="fieldset" type="fieldset"/>
+        </xs:sequence>
+        <xs:attribute name="name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+
+    <xs:complexType name="fieldset">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="field" type="field"/>
+        </xs:sequence>
+        <xs:attribute name="name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+
+    <xs:complexType name="field">
+        <xs:sequence>
+            <xs:element name="option" minOccurs="0" maxOccurs="unbounded" type="option"/>
+        </xs:sequence>
+        <xs:attribute name="class" type="xs:NMTOKEN"/>
+        <xs:attribute name="cols" type="xs:integer"/>
+        <xs:attribute name="default"/>
+        <xs:attribute name="description" type="xs:NCName"/>
+        <xs:attribute name="key_field" type="xs:NCName"/>
+        <xs:attribute name="label" type="xs:NCName"/>
+        <xs:attribute name="name" use="required" type="xs:NCName"/>
+        <xs:attribute name="query"/>
+        <xs:attribute name="rows" type="xs:integer"/>
+        <xs:attribute name="size" type="xs:integer"/>
+        <xs:attribute name="type" use="required" type="xs:NCName"/>
+        <xs:attribute name="value_field" type="xs:NCName"/>
+        <xs:attribute name="value" use="optional" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType mixed="true" name="option">
+        <xs:attribute name="value" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
 
     <xs:complexType name="sql">
         <xs:sequence>
@@ -160,20 +190,169 @@
     <xs:element name="sql">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="file"/>
+                <xs:element name="file" type="file" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="file">
-        <xs:complexType mixed="true">
-            <xs:attribute name="charset" use="required" type="xs:NCName"/>
-            <xs:attribute name="driver" use="required" type="xs:NCName"/>
-            <xs:attribute name="folder" type="xs:NCName"/>
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType mixed="true" name="file">
+        <xs:attribute name="charset" use="required" type="xs:NCName"/>
+        <xs:attribute name="driver" use="required" type="xs:NCName"/>
+        <xs:attribute name="folder" type="xs:NCName"/>
+    </xs:complexType>
 
-    <xs:element name="folder" type="xs:string"/>
-    <!-- todo could be a filepath -->
+    <xs:complexType name="files">
+        <xs:all>
+            <xs:element name="filename" type="filename" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="folder" type="folder" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:all>
+        <xs:attribute name="folder" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="filename">
+        <xs:simpleContent>
+            <xs:extension base="xs:NCName">
+                <xs:attribute name="plugin" use="optional" type="xs:NCName"/>
+                <xs:attribute name="module" use="optional" type="xs:NCName"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="folder">
+        <xs:simpleContent>
+            <xs:extension base="xs:string"> </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="media">
+        <xs:all>
+            <xs:element name="filename" type="filename" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="folder" type="folder" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:all>
+        <xs:attribute name="destination" use="required" type="xs:string"/>
+        <xs:attribute name="folder" use="optional" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="tables">
+        <xs:sequence>
+            <xs:element name="table" type="table" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType mixed="true" name="table">
+        <xs:attribute name="type" type="xs:NCName"/>
+    </xs:complexType>
+
+    <xs:complexType name="dependencies">
+        <xs:sequence>
+            <xs:element name="dependency" type="dependency"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dependency">
+        <xs:attribute name="name" use="required" type="xs:NCName"/>
+        <xs:attribute name="operator" use="required"/>
+        <xs:attribute name="type" use="required" type="xs:NCName"/>
+        <xs:attribute name="version" use="required" type="xs:decimal"/>
+    </xs:complexType>
+
+    <xs:complexType name="positions">
+        <xs:sequence>
+            <xs:element name="position" maxOccurs="unbounded" type="xs:NCName"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="locales">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"> This attribute describes the type of the extension for the installer. Based on this type further requirements to sub-tags apply. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="af-ZA"/>
+            <xs:enumeration value="ar-AA"/>
+            <xs:enumeration value="az-AZ"/>
+            <xs:enumeration value="be-BY"/>
+            <xs:enumeration value="bg-BG"/>
+            <xs:enumeration value="bn-BD"/>
+            <xs:enumeration value="bn-IN"/>
+            <xs:enumeration value="bs-BA"/>
+            <xs:enumeration value="ca-ES"/>
+            <xs:enumeration value="cs-CZ"/>
+            <xs:enumeration value="da-DK"/>
+            <xs:enumeration value="DE-CH"/>
+            <xs:enumeration value="de-DE"/>
+            <xs:enumeration value="el-GR"/>
+            <xs:enumeration value="en-AU"/>
+            <xs:enumeration value="en-US"/>
+            <xs:enumeration value="eo-XX"/>
+            <xs:enumeration value="es-ES"/>
+            <xs:enumeration value="et-EE"/>
+            <xs:enumeration value="eu-ES"/>
+            <xs:enumeration value="fa-AF"/>
+            <xs:enumeration value="fa-IR"/>
+            <xs:enumeration value="fi-FI"/>
+            <xs:enumeration value="fr-FR"/>
+            <xs:enumeration value="gl-ES"/>
+            <xs:enumeration value="gu-IN"/>
+            <xs:enumeration value="he-IL"/>
+            <xs:enumeration value="hi-IN"/>
+            <xs:enumeration value="hr-HR"/>
+            <xs:enumeration value="hu-HU"/>
+            <xs:enumeration value="hy-AM"/>
+            <xs:enumeration value="id-ID"/>
+            <xs:enumeration value="is-IS"/>
+            <xs:enumeration value="it-IT"/>
+            <xs:enumeration value="ja-JP"/>
+            <xs:enumeration value="ka-GE"/>
+            <xs:enumeration value="km-KH"/>
+            <xs:enumeration value="lo-LA"/>
+            <xs:enumeration value="lt-LT"/>
+            <xs:enumeration value="lv-LV"/>
+            <xs:enumeration value="mk-MK"/>
+            <xs:enumeration value="ml-IN"/>
+            <xs:enumeration value="mn-MN"/>
+            <xs:enumeration value="ms-MY"/>
+            <xs:enumeration value="nb-NO"/>
+            <xs:enumeration value="nl-NL"/>
+            <xs:enumeration value="pl-PL"/>
+            <xs:enumeration value="ps-AF"/>
+            <xs:enumeration value="ps-AF"/>
+            <xs:enumeration value="ps-AF"/>
+            <xs:enumeration value="pt-BR"/>
+            <xs:enumeration value="pt-BR"/>
+            <xs:enumeration value="pt-PT"/>
+            <xs:enumeration value="ro-RO"/>
+            <xs:enumeration value="ru-RU"/>
+            <xs:enumeration value="si-LK"/>
+            <xs:enumeration value="sk-SK"/>
+            <xs:enumeration value="sq-AL"/>
+            <xs:enumeration value="sr-ME"/>
+            <xs:enumeration value="sr-RS"/>
+            <xs:enumeration value="sr-RS"/>
+            <xs:enumeration value="sr-YU"/>
+            <xs:enumeration value="sr-YU"/>
+            <xs:enumeration value="ta-IN"/>
+            <xs:enumeration value="ta-LK"/>
+            <xs:enumeration value="th-TH"/>
+            <xs:enumeration value="tl-PH"/>
+            <xs:enumeration value="tr-TR"/>
+            <xs:enumeration value="tr-TR"/>
+            <xs:enumeration value="tr-TR"/>
+            <xs:enumeration value="uk-UA"/>
+            <xs:enumeration value="ur-PK"/>
+            <xs:enumeration value="vi-VN"/>
+            <xs:enumeration value="zh-CN"/>
+            <xs:enumeration value="zh-TW"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="filenameSafePattern">
+        <xs:annotation>
+            <xs:documentation>Defines a string subset safe in most file systems as file name (excluding path).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="[\-.0-9a-zA-Z_]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 
 </xs:schema>

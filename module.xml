@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension type="module" version="1.6" client="site" method="upgrade"
-	xsi:noNamespaceSchemaLocation="./module.xsd" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	
+<extension type="module" version="1.6" client="site" method="upgrade" xsi:noNamespaceSchemaLocation="./module.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
 	<!-- Note: Site is the default if client is not specified -->
 	<name>Site Alpha</name>
 	<creationDate>July 2008</creationDate>
@@ -43,9 +41,9 @@
 		<folder>sql</folder>
 	</files>
 
-    <media destination="mod_alpha">
-   		<filename>com_alpha.jpg</filename>
-   	</media>
+	<media destination="mod_alpha">
+		<filename>com_alpha.jpg</filename>
+	</media>
 
 	<languages>
 		<language tag="en-GB">en-GB.mod_alpha.ini</language>

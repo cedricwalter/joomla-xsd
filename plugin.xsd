@@ -1,81 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-    <xs:include schemaLocation="./common.xsd"></xs:include>
+    <xs:include schemaLocation="./common.xsd"/>
 
     <xs:element name="extension">
         <xs:complexType>
             <xs:all>
-                <xs:element ref="name"/>
-                <xs:element ref="creationDate"/>
-                <xs:element ref="author"/>
-                <xs:element ref="authorEmail"/>
-                <xs:element ref="authorUrl"/>
-                <xs:element ref="copyright"/>
-                <xs:element ref="license"/>
-                <xs:element ref="version"/>
-                <xs:element ref="description"/>
-                <xs:element ref="scriptfile"/>
-                <xs:element ref="install"/>
-                <xs:element ref="uninstall"/>
-                <xs:element ref="update"/>
-                <xs:element ref="media"/>
-                <xs:element ref="files"/>
-                <xs:element ref="config"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="author" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en"> author's name (e.g. Joomla! Project) </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="authorEmail" type="xs:string"/>
+                <xs:element name="authorUrl" type="xs:anyURI"/>
+                <xs:element name="copyright" type="xs:string"/>
+                <xs:element name="license" type="xs:string"/>
+                <xs:element name="version" type="version"/>
+                <xs:element name="creationDate" type="xs:string"/>
+                <xs:element name="description" type="xs:normalizedString" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="scriptfile" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="install" type="sql" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="uninstall" type="sql" minOccurs="0" maxOccurs="1"/>
+
+                <xs:element name="languages" type="languages" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="update" type="update" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="files" type="files" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="media" type="media" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="config" type="config" minOccurs="0" maxOccurs="1"/>
             </xs:all>
             <xs:attribute name="group" use="required" type="xs:string"/>
-            <xs:attribute name="method" use="required" type="method" />
-            <xs:attribute name="type" use="required" type="type" />
-            <xs:attribute name="version" use="required" type="version" />
+            <xs:attribute name="method" use="required" type="method"/>
+            <xs:attribute name="type" use="required" type="type"/>
+            <xs:attribute name="version" use="required" type="version"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="name" type="xs:string"/>
-    <xs:element name="creationDate" type="xs:string"/>
-    <xs:element name="author" type="xs:string">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                author's name (e.g. Joomla! Project)
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="authorEmail" type="xs:string"/>
-    <xs:element name="authorUrl" type="xs:anyURI"/>
-    <xs:element name="copyright" type="xs:string"/>
-    <xs:element name="license" type="xs:string"/>
-    <xs:element name="version" type="xs:NMTOKEN"/>
-    <xs:element name="description" type="xs:NCName"/>
-    <xs:element name="scriptfile" type="xs:NCName"/>
-    <xs:element name="install" type="sql"/>
-    <xs:element name="uninstall" type="sql"/>
-
-
-    <xs:element name="files">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="filename"/>
-                <xs:element maxOccurs="unbounded" ref="folder"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="filename">
-        <xs:complexType>
-            <xs:simpleContent>
-                <xs:extension base="xs:NCName">
-                    <xs:attribute name="plugin" use="optional" type="xs:NCName"/>
-                </xs:extension>
-            </xs:simpleContent>
-        </xs:complexType>
-    </xs:element>
-
-
-    <!-- todo move up -->
-    <xs:element name="media">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="filename"/>
-            </xs:sequence>
-            <xs:attribute name="destination" use="required" type="xs:NCName"/>
-        </xs:complexType>
-    </xs:element>
-
 </xs:schema>
