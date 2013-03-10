@@ -1,147 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  
-  <xs:include schemaLocation="./common.xsd"></xs:include>
-    
-  <xs:element name="extension">
-    <xs:complexType>
-      <xs:all>
-        <xs:element ref="name"/>
-        <xs:element ref="author"/>
-        <xs:element ref="authorEmail"/>
-        <xs:element ref="authorUrl"/>
-        <xs:element ref="copyright"/>
-        <xs:element ref="license"/>
-        <xs:element ref="version"/>
-        <xs:element ref="creationDate"/>
-        <xs:element ref="description"/>
-        <xs:element ref="installfile"/>
-        <xs:element ref="uninstallfile"/>
-        <xs:element ref="scriptfile"/>
-        <xs:element ref="install"/>
-        <xs:element ref="uninstall"/>
-        <xs:element ref="update"/>
-        <xs:element ref="files"/>
-        <xs:element ref="media"/>
-        <xs:element ref="administration"/>
-        <xs:element ref="updateservers"/>
-        <xs:element ref="tables"/>
-        <xs:element ref="dependencies"/>
-        <xs:element ref="config"/>
-      </xs:all>
-        <xs:attribute name="method" use="required" type="method"/>
-        <xs:attribute name="type" use="required" type="type"/>
-        <xs:attribute name="version" use="required" type="version"/>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="name" type="xs:NCName"/>
-  <xs:element name="author" type="xs:string"/>
-  <xs:element name="authorEmail" type="xs:string"/>
-  <xs:element name="authorUrl" type="xs:anyURI"/>
-  <xs:element name="copyright" type="xs:string"/>
-  <xs:element name="license" type="xs:string"/>
-  <xs:element name="version" type="xs:decimal"/>
-  <xs:element name="creationDate" type="xs:string"/>
-  <xs:element name="description" type="xs:NCName"/>
-  <xs:element name="installfile" type="xs:NCName"/>
-  <xs:element name="uninstallfile" type="xs:NCName"/>
-  <xs:element name="scriptfile" type="xs:NCName"/>
-  <xs:element name="install" type="sql"/>
-  <xs:element name="uninstall" type="sql"/>  
-   
-  <xs:element name="media">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="filename"/>
-      </xs:sequence>
-      <xs:attribute name="destination" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="administration">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="menu"/>
-        <xs:element ref="submenu"/>
-        <xs:element ref="files"/>
-        <xs:element ref="languages"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="submenu">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="menu"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
- 
-  <xs:element name="updateservers">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="server"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="server">
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="xs:anyURI">
-          <xs:attribute name="name" use="required"/>
-          <xs:attribute name="priority" use="required" type="xs:integer"/>
-          <xs:attribute name="type" use="required" type="xs:NCName"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="tables">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="table"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="table">
-    <xs:complexType mixed="true">
-      <xs:attribute name="type" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="dependencies">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="dependency"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="dependency">
-    <xs:complexType>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-      <xs:attribute name="operator" use="required"/>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-      <xs:attribute name="version" use="required" type="xs:decimal"/>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="files">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="filename"/>
-        <xs:element minOccurs="0" ref="folder"/>
-      </xs:sequence>
-      <xs:attribute name="folder" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="filename" type="xs:NCName"/>
- 
-  <xs:element name="menu">
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="xs:NCName">
-          <xs:attribute name="img"/>
-          <xs:attribute name="link"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
+
+    <xs:include schemaLocation="./common.xsd"></xs:include>
+
+    <xs:element name="extension">
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="name"/>
+                <xs:element ref="author"/>
+                <xs:element ref="authorEmail"/>
+                <xs:element ref="authorUrl"/>
+                <xs:element ref="copyright"/>
+                <xs:element ref="license"/>
+                <xs:element ref="version"/>
+                <xs:element ref="creationDate"/>
+                <xs:element ref="description"/>
+                <xs:element ref="installfile"/>
+                <xs:element ref="uninstallfile"/>
+                <xs:element ref="scriptfile"/>
+                <xs:element ref="install"/>
+                <xs:element ref="uninstall"/>
+                <xs:element ref="update"/>
+                <xs:element ref="files"/>
+                <xs:element ref="media"/>
+                <xs:element ref="administration"/>
+                <xs:element ref="updateservers"/>
+                <xs:element ref="tables"/>
+                <xs:element ref="dependencies"/>
+                <xs:element ref="config"/>
+            </xs:all>
+            <xs:attribute name="method" use="required" type="method"/>
+            <xs:attribute name="type" use="required" type="type"/>
+            <xs:attribute name="version" use="required" type="version"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="name" type="xs:NCName"/>
+    <xs:element name="author" type="xs:string"/>
+    <xs:element name="authorEmail" type="xs:string"/>
+    <xs:element name="authorUrl" type="xs:anyURI"/>
+    <xs:element name="copyright" type="xs:string"/>
+    <xs:element name="license" type="xs:string"/>
+    <xs:element name="version" type="xs:decimal"/>
+    <xs:element name="creationDate" type="xs:string"/>
+    <xs:element name="description" type="xs:NCName"/>
+    <xs:element name="installfile" type="xs:NCName"/>
+    <xs:element name="uninstallfile" type="xs:NCName"/>
+    <xs:element name="scriptfile" type="xs:NCName"/>
+    <xs:element name="install" type="sql"/>
+    <xs:element name="uninstall" type="sql"/>
+
+    <!-- todo move up -->
+    <xs:element name="media">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="filename"/>
+            </xs:sequence>
+            <xs:attribute name="destination" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="administration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="menu"/>
+                <xs:element ref="submenu"/>
+                <xs:element ref="files"/>
+                <xs:element ref="languages"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="submenu">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="menu"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateservers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="server"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="server">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:anyURI">
+                    <xs:attribute name="name" use="required"/>
+                    <xs:attribute name="priority" use="required" type="xs:integer"/>
+                    <xs:attribute name="type" use="required" type="xs:NCName"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tables">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="table"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="table">
+        <xs:complexType mixed="true">
+            <xs:attribute name="type" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dependencies">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dependency"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dependency">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="operator" use="required"/>
+            <xs:attribute name="type" use="required" type="xs:NCName"/>
+            <xs:attribute name="version" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="files">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="filename"/>
+                <xs:element minOccurs="0" ref="folder"/>
+            </xs:sequence>
+            <xs:attribute name="folder" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="filename" type="xs:NCName"/>
+
+    <xs:element name="menu">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:NCName">
+                    <xs:attribute name="img"/>
+                    <xs:attribute name="link"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

@@ -38,6 +38,10 @@
 		<folder>language</folder>
 	</files>
 
+    <media destination="plg_alpha">
+   		<filename>com_alpha.jpg</filename>
+   	</media>
+
 	<!-- Languages; deprecated 1.5 style -->
 	<!-- <languages folder="language">
 		<language client="administrator" tag="en-GB">admin/en-GB.plg_system_alpha.ini</language>
