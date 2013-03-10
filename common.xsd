@@ -68,7 +68,7 @@
     <xs:complexType name="menu">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="img" type="xs:string"/>
+                <xs:attribute name="img" type="validFilePath"/>
                 <xs:attribute name="link" type="xs:string"/>
             </xs:extension>
         </xs:simpleContent>
@@ -130,10 +130,8 @@
 
     <xs:complexType name="language">
         <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <!-- todo define a type filepath -->
-                <xs:attribute name="tag" use="required" type="xs:string"/>
-                <!-- todo define all locale -->
+            <xs:extension base="validFilePath">
+                <xs:attribute name="tag" use="required" type="locales"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -211,7 +209,7 @@
 
     <xs:complexType name="filename">
         <xs:simpleContent>
-            <xs:extension base="xs:NCName">
+            <xs:extension base="validFilePath">
                 <xs:attribute name="plugin" use="optional" type="xs:NCName"/>
                 <xs:attribute name="module" use="optional" type="xs:NCName"/>
             </xs:extension>
@@ -282,6 +280,7 @@
             <xs:enumeration value="de-DE"/>
             <xs:enumeration value="el-GR"/>
             <xs:enumeration value="en-AU"/>
+            <xs:enumeration value="en-GB"/>
             <xs:enumeration value="en-US"/>
             <xs:enumeration value="eo-XX"/>
             <xs:enumeration value="es-ES"/>
@@ -358,6 +357,16 @@
     <xs:simpleType name="validateEmail">
         <xs:restriction base="xs:string">
           <xs:pattern value="[A-Za-z0-9_]+([-+.'][A-Za-z0-9_]+)*@[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*\.[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="validFilePath">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Validate filepath</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[./A-Za-z0-9_-]*"/>
         </xs:restriction>
     </xs:simpleType>
 
