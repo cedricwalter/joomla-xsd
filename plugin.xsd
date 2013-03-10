@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:element name="extension">
+
+    <xs:include schemaLocation="./common.xsd"></xs:include>
+
+    <xs:element name="extension">
     <xs:complexType>
       <xs:all>
         <xs:element ref="name"/>
@@ -19,10 +22,10 @@
         <xs:element ref="files"/>
         <xs:element ref="config"/>
       </xs:all>
-      <xs:attribute name="group" use="required" type="xs:NCName"/>
-      <xs:attribute name="method" use="required" type="xs:NCName"/>
-      <xs:attribute name="type" use="required" type="xs:type"/>
-      <xs:attribute name="version" use="required" type="xs:decimal"/>
+      <xs:attribute name="group" use="required" type="xs:string"/>
+        <xs:attribute name="method" use="required" type="method"/>
+        <xs:attribute name="type" use="required" type="type"/>
+        <xs:attribute name="version" use="required" type="version"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="name" type="xs:string"/>
@@ -37,25 +40,8 @@
   <xs:element name="scriptfile" type="xs:NCName"/>
   <xs:element name="install" type="sql"/>
   <xs:element name="uninstall" type="sql"/>
-  <xs:element name="update">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="schemas"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="schemas">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="schemapath"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="schemapath">
-    <xs:complexType mixed="true">
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
+
+
   <xs:element name="files">
     <xs:complexType>
       <xs:sequence>
@@ -74,65 +60,10 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="folder" type="xs:NCName"/>
-  <xs:element name="config">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="fields"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="fields">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="fieldset"/>
-      </xs:sequence>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="fieldset">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="field"/>
-      </xs:sequence>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="field">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="option"/>
-      </xs:sequence>
-      <xs:attribute name="class" type="xs:NMTOKEN"/>
-      <xs:attribute name="cols" type="xs:integer"/>
-      <xs:attribute name="default"/>
-      <xs:attribute name="description" type="xs:NCName"/>
-      <xs:attribute name="key_field" type="xs:NCName"/>
-      <xs:attribute name="label" type="xs:NCName"/>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-      <xs:attribute name="query"/>
-      <xs:attribute name="rows" type="xs:integer"/>
-      <xs:attribute name="size" type="xs:integer"/>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-      <xs:attribute name="value_field" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="option">
-    <xs:complexType mixed="true">
-      <xs:attribute name="value" use="required" type="xs:NMTOKEN"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:complexType name="sql">
-    <xs:sequence>
-      <xs:element ref="sql"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="sql">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="file"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+
+
+
+
   <xs:element name="file">
     <xs:complexType mixed="true">
       <xs:attribute name="charset" use="required" type="xs:NCName"/>
@@ -140,13 +71,6 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="type">
-    <xs:complexType>
-      <xs:choice>
-        <xs:element name="upgrade" type="xs:string"/>
-        <xs:element name="update" type="xs:string"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
+
 
 </xs:schema>

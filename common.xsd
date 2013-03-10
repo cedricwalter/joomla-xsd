@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"> 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:complexType name="method">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The default value install will be also used if the method attribute is not used. The install value means the installer will gracefully stop if it finds any existing file/folder of the new extension.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="install" type="xs:string"/>
+            <xs:element name="upgrade" type="xs:string"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="type">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This attribute describes the type of the extension for the installer. Based on this type further requirements to sub-tags apply.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="component" type="xs:string"/>
+            <xs:element name="file" type="xs:string"/>
+            <xs:element name="language" type="xs:string"/>
+            <xs:element name="library" type="xs:string"/>
+            <xs:element name="module" type="xs:string"/>
+            <xs:element name="package" type="xs:string"/>
+            <xs:element name="plugin" type="xs:string"/>
+            <xs:element name="template" type="xs:string"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:simpleType name="version">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                String that identifies the version of Joomla for which this extension is developed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:enumeration value="1.6"/>
+            <xs:enumeration value="2.5"/>
+            <xs:enumeration value="3.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="client">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The client attribute allows you to specify for which application client the new module is available.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="site"/>
+            <xs:enumeration value="administrator"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 
     <xs:element name="update">
         <xs:complexType>
@@ -16,12 +72,18 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="schemapath">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This defines the directory that contains SQL files for component incremental database updates. You may choose to put the SQL files somewhere
+                else in your component release, but make sure their location is documented here.
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexType mixed="true">
             <xs:attribute name="type" use="required" type="xs:NCName"/>
         </xs:complexType>
     </xs:element>
-  
-    
+
+
     <xs:element name="languages">
         <xs:complexType>
             <xs:sequence>
@@ -33,13 +95,14 @@
     <xs:element name="language">
         <xs:complexType>
             <xs:simpleContent>
-                <xs:extension base="xs:string"> <!-- todo define a type filepath --> 
-                    <xs:attribute name="tag" use="required" type="xs:string"/> <!-- todo define all locale --> 
+                <xs:extension base="xs:string"> <!-- todo define a type filepath -->
+                    <xs:attribute name="tag" use="required" type="xs:string"/>
+                    <!-- todo define all locale -->
                 </xs:extension>
             </xs:simpleContent>
         </xs:complexType>
     </xs:element>
-   
+
     <xs:element name="config">
         <xs:complexType>
             <xs:sequence>
@@ -88,7 +151,7 @@
             <xs:attribute name="value" use="required" type="xs:NMTOKEN"/>
         </xs:complexType>
     </xs:element>
-    
+
     <xs:complexType name="sql">
         <xs:sequence>
             <xs:element ref="sql"/>
@@ -101,7 +164,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-        
+
     <xs:element name="file">
         <xs:complexType mixed="true">
             <xs:attribute name="charset" use="required" type="xs:NCName"/>
@@ -110,6 +173,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="folder" type="xs:string"/> <!-- todo could be a filepath --> 
+    <xs:element name="folder" type="xs:string"/>
+    <!-- todo could be a filepath -->
 
 </xs:schema>
