@@ -19,7 +19,7 @@
                 <xs:element name="version" type="version"/>
                 <xs:element name="creationDate" type="xs:string"/>
                 <xs:element name="description" type="xs:normalizedString" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="scriptfile" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="scriptfile" type="validScript" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="install" type="sql" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="uninstall" type="sql" minOccurs="0" maxOccurs="1"/>
 

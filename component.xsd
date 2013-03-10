@@ -27,7 +27,7 @@
                     </xs:annotation>
                 </xs:element>
 
-                <xs:element name="scriptfile" type="xs:NCName"/>
+                <xs:element name="scriptfile" type="validScript"/>
                 <xs:element name="install" type="sql"/>
                 <xs:element name="uninstall" type="sql"/>
 

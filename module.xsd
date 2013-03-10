@@ -15,7 +15,8 @@
                 <xs:element name="version" type="version"/>
                 <xs:element name="creationDate" type="xs:string"/>
                 <xs:element name="description" type="xs:normalizedString"/>
-                <xs:element name="scriptfile" type="xs:NCName"/>
+                <xs:element name="scriptfile" type="validScript"/>
+
                 <xs:element name="install" type="sql"/>
                 <xs:element name="uninstall" type="sql"/>
 
