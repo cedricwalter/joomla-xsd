@@ -68,7 +68,7 @@
     <xs:complexType name="menu">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="img"/>
+                <xs:attribute name="img" type="xs:string"/>
                 <xs:attribute name="link" type="xs:string"/>
             </xs:extension>
         </xs:simpleContent>
@@ -351,6 +351,13 @@
         </xs:annotation>
         <xs:restriction base="xs:NMTOKEN">
             <xs:pattern value="[\-.0-9a-zA-Z_]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="validateEmail">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[A-Za-z0-9_]+([-+.'][A-Za-z0-9_]+)*@[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*\.[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*" />
         </xs:restriction>
     </xs:simpleType>
 

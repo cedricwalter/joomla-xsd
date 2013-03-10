@@ -9,7 +9,7 @@
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="tag" type="locales"/>
                 <xs:element name="author" type="xs:string"/>
-                <xs:element name="authorEmail" type="xs:string"/>
+                <xs:element name="authorEmail" type="validateEmail"/>
                 <xs:element name="authorUrl" type="xs:anyURI"/>
                 <xs:element name="copyright" type="xs:string"/>
                 <xs:element name="license" type="xs:string"/>
