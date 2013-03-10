@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-    <xs:complexType name="method">
+    <xs:simpleType name="method">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                The default value install will be also used if the method attribute is not used. The install value means the installer will gracefully stop if it finds any existing file/folder of the new extension.
+                The default value install will be also used if the method attribute is not used. The install value means the installer will gracefully stop if
+                it finds any existing file/folder of the new extension.
             </xs:documentation>
         </xs:annotation>
-        <xs:choice>
-            <xs:element name="install" type="xs:string"/>
-            <xs:element name="upgrade" type="xs:string"/>
-        </xs:choice>
-    </xs:complexType>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="install"/>
+            <xs:enumeration value="upgrade"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xs:complexType name="type">
+    <xs:simpleType name="type">
         <xs:annotation>
             <xs:documentation xml:lang="en">
                 This attribute describes the type of the extension for the installer. Based on this type further requirements to sub-tags apply.
             </xs:documentation>
         </xs:annotation>
-        <xs:choice>
-            <xs:element name="component" type="xs:string"/>
-            <xs:element name="file" type="xs:string"/>
-            <xs:element name="language" type="xs:string"/>
-            <xs:element name="library" type="xs:string"/>
-            <xs:element name="module" type="xs:string"/>
-            <xs:element name="package" type="xs:string"/>
-            <xs:element name="plugin" type="xs:string"/>
-            <xs:element name="template" type="xs:string"/>
-        </xs:choice>
-    </xs:complexType>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="component"/>
+            <xs:enumeration value="file"/>
+            <xs:enumeration value="language"/>
+            <xs:enumeration value="library"/>
+            <xs:enumeration value="module"/>
+            <xs:enumeration value="package"/>
+            <xs:enumeration value="plugin"/>
+            <xs:enumeration value="template"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="version">
         <xs:annotation>

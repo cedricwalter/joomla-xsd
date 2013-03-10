@@ -24,9 +24,9 @@
                 <xs:element ref="config"/>
             </xs:all>
             <xs:attribute name="group" use="required" type="xs:string"/>
-            <xs:attribute name="method" use="required" type="method"/>
-            <xs:attribute name="type" use="required" type="type"/>
-            <xs:attribute name="version" use="required" type="version"/>
+            <xs:attribute name="method" use="required" type="method" />
+            <xs:attribute name="type" use="required" type="type" />
+            <xs:attribute name="version" use="required" type="version" />
         </xs:complexType>
     </xs:element>
     <xs:element name="name" type="xs:string"/>
@@ -66,15 +66,7 @@
             </xs:simpleContent>
         </xs:complexType>
     </xs:element>
-    <xs:element name="folder" type="xs:NCName"/>
 
-
-    <xs:element name="file">
-        <xs:complexType mixed="true">
-            <xs:attribute name="charset" use="required" type="xs:NCName"/>
-            <xs:attribute name="driver" use="required" type="xs:NCName"/>
-        </xs:complexType>
-    </xs:element>
 
     <!-- todo move up -->
     <xs:element name="media">

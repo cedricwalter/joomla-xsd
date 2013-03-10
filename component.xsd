@@ -29,7 +29,8 @@
                 <xs:element ref="dependencies"/>
                 <xs:element ref="config"/>
             </xs:all>
-            <xs:attribute name="method" use="required" type="method"/>
+
+            <xs:attribute name="method" default="upgrade" type="method"/>
             <xs:attribute name="type" use="required" type="type"/>
             <xs:attribute name="version" use="required" type="version"/>
         </xs:complexType>
