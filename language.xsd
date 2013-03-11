@@ -6,19 +6,20 @@
     <xs:element name="metafile">
         <xs:complexType>
             <xs:all>
-                <xs:element name="name" type="xs:string"/>
-                <xs:element name="tag" type="locales"/>
-                <xs:element name="author" type="xs:string"/>
-                <xs:element name="authorEmail" type="validateEmail"/>
-                <xs:element name="authorUrl" type="xs:anyURI"/>
-                <xs:element name="copyright" type="xs:string"/>
-                <xs:element name="license" type="xs:string"/>
-                <xs:element name="version" type="version"/>
-                <xs:element name="creationDate" type="xs:string"/>
-                <xs:element name="description" type="xs:normalizedString"/>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="tag" type="locales" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="author" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="authorEmail" type="validateEmail" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="authorUrl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="copyright" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="license" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="version" type="version" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="creationDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="description" type="xs:normalizedString" minOccurs="0" maxOccurs="1"/>
                 
-                <xs:element name="metadata" type="metadata"/>
-                <xs:element name="params" type="params"/>
+                <xs:element name="files" type="files" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="metadata" type="metadata" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="params" type="params" minOccurs="0" maxOccurs="1"/>
             </xs:all>
             <xs:attribute name="client" use="required" type="client"/>
             <xs:attribute name="version" use="required" type="version"/>
@@ -27,13 +28,14 @@
 
     <xs:complexType name="metadata">
         <xs:all>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="tag" type="xs:NCName"/>
-            <xs:element name="rtl" type="xs:integer"/>
-            <xs:element name="locale" type="xs:string"/>
-            <xs:element name="winCodePage" type="xs:NCName"/>
-            <xs:element name="backwardLang" type="xs:NCName"/>
-            <xs:element name="pdfFontName" type="xs:NCName"/>
+            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="tag" type="xs:NCName" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="rtl" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="firstDay" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="locale" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="winCodePage" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="backwardLang" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="pdfFontName" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
         </xs:all>
     </xs:complexType>
 

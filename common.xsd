@@ -81,10 +81,10 @@
 
     <xs:complexType name="administration">
         <xs:all>
-            <xs:element name="menu" type="menu"/>
-            <xs:element name="submenu" type="submenu"/>
+            <xs:element name="menu" type="menu" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="submenu" type="submenu"  minOccurs="0" maxOccurs="1"/>
             <xs:element name="files" type="files"/>
-            <xs:element name="languages" type="languages"/>
+            <xs:element name="languages" type="languages" minOccurs="0" maxOccurs="1"/>
         </xs:all>
     </xs:complexType>
 

@@ -6,14 +6,14 @@
     <xs:element name="extension">
         <xs:complexType>
             <xs:all>
-                <xs:element name="name" type="xs:string"/>
-                <xs:element name="author" type="xs:string"/>
-                <xs:element name="authorEmail" type="validateEmail"/>
-                <xs:element name="authorUrl" type="xs:anyURI"/>
-                <xs:element name="copyright" type="xs:string"/>
-                <xs:element name="license" type="xs:string"/>
-                <xs:element name="version" type="version"/>
-                <xs:element name="creationDate" type="xs:string"/>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="author" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="authorEmail" type="validateEmail" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="authorUrl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="copyright" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="license" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="version" type="version" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="creationDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="description" type="xs:normalizedString"/>
 
                 <xs:element name="installfile" type="xs:normalizedString" minOccurs="0" maxOccurs="1">
@@ -27,9 +27,9 @@
                     </xs:annotation>
                 </xs:element>
 
-                <xs:element name="scriptfile" type="validScript"/>
-                <xs:element name="install" type="sql"/>
-                <xs:element name="uninstall" type="sql"/>
+                <xs:element name="scriptfile" type="validScript" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="install" type="sql" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="uninstall" type="sql" minOccurs="0" maxOccurs="1"/>
 
                 <xs:element name="languages" type="languages" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="update" type="update" minOccurs="0" maxOccurs="1"/>

@@ -6,20 +6,19 @@
     <xs:element name="extension">
         <xs:complexType>
             <xs:all>
-               
-                <xs:element name="name" type="xs:string"/>
-                <xs:element name="author" type="xs:string"/>
-                <xs:element name="authorEmail" type="validateEmail"/>
-                <xs:element name="authorUrl" type="xs:anyURI"/>
-                <xs:element name="copyright" type="xs:string"/>
-                <xs:element name="license" type="xs:string"/>
-                <xs:element name="version" type="version"/>
-                <xs:element name="creationDate" type="xs:string"/>
-                <xs:element name="description" type="xs:normalizedString"/>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="author" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="authorEmail" type="validateEmail" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="authorUrl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="copyright" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="license" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="version" type="version" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="creationDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="description" type="xs:normalizedString" minOccurs="0" maxOccurs="1"/>
                 
-                <xs:element name="files" type="files"/>
-                <xs:element name="config" type="config"/>
-                <xs:element name="positions" type="positions"/>
+                <xs:element name="files" type="files" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="config" type="config" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="positions" type="positions" minOccurs="0" maxOccurs="1"/>
                 
             </xs:all>
             <xs:attribute name="method" use="required" type="method"/>
