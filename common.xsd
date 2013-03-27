@@ -167,7 +167,7 @@
         <xs:sequence>
             <xs:element name="option" minOccurs="0" maxOccurs="unbounded" type="option"/>
         </xs:sequence>
-        <xs:attribute name="class" type="xs:string"/>
+        <xs:attribute name="class" type="fieldClassType"/>
         <xs:attribute name="cols" type="xs:integer"/>
         <xs:attribute name="default"/>
         <xs:attribute name="description" type="xs:NCName"/>
@@ -180,7 +180,24 @@
         <xs:attribute name="type" use="required" type="fieldType"/>
         <xs:attribute name="value_field" type="xs:NCName"/>
         <xs:attribute name="value" use="optional" type="xs:boolean"/>
+        <xs:attribute name="required" use="optional" type="xs:boolean"/>
     </xs:complexType>
+
+    <xs:simpleType name="fieldClassType">
+        <xs:union memberTypes="fieldClassEnum fieldClassAnyString"/>
+      </xs:simpleType>
+      <xs:simpleType name="fieldClassEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="btn-group"/>
+            <xs:enumeration value="inputbox"/>
+            <xs:enumeration value="inputbox validate-password"/>
+            <xs:enumeration value="inputbox text-long"/>
+            <xs:enumeration value="readonly"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="fieldClassAnyString">
+        <xs:restriction base="xs:string"/>
+      </xs:simpleType>
 
     <xs:simpleType name="fieldType">
         <xs:annotation>
@@ -269,10 +286,32 @@
 
     <xs:complexType name="dependency">
         <xs:attribute name="name" use="required" type="xs:NCName"/>
-        <xs:attribute name="operator" use="required"/>
-        <xs:attribute name="type" use="required" type="xs:NCName"/>
-        <xs:attribute name="version" use="required" type="xs:decimal"/>
+        <xs:attribute name="operator" use="required" type="dependencyOperatorType"/>
+        <xs:attribute name="type" use="required" type="dependencyType"/>
+        <xs:attribute name="version" use="required" type="version"/>
     </xs:complexType>
+
+    <xs:simpleType name="dependencyOperatorType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Dependencies are not currently supported, but were added for that possibility in the future.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=">"/>
+            <xs:enumeration value="="/>
+        </xs:restriction>
+    </xs:simpleType> 
+    
+    <xs:simpleType name="dependencyType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Dependencies are not currently supported, but were added for that possibility in the future.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="library"/>
+            <xs:enumeration value="module"/>
+            <xs:enumeration value="plugin"/>
+            <xs:enumeration value="platform"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="positions">
         <xs:sequence>

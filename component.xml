@@ -108,19 +108,21 @@
             <fieldset name="basic">
                 <field name="tagsForSelection" type="sql" query="select id,concat(id,'--',name) as name from #__cedtag_term;" key_field="id" value_field="name" label="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_DESC"
                     rows="8" cols="40"/>
-                <field name="tagIds" type="text" default="" label="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_DESC" size="60"/>
-                <field name="sorting" type="list" default="1" label="MOD_CEDCUSTOMTAGSCLOUD_SORTING_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_SORTING_DESC">
+            	<field name="tagIds" required="true" type="text" default="" label="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_DESC" size="60"/>
+                <field name="sorting" type="list" default="1" label="MOD_CEDCUSTOMTAGSCLOUD_SORTING_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_SORTING_DESC"
+                	class="btn-group">
                     <option value="tag_latestasort">By Latest created</option>
                     <option value="tag_alphasort">MOD_CEDCUSTOMTAGSCLOUD_SORTING_VALUE1</option>
                     <option value="sizeasort">MOD_CEDCUSTOMTAGSCLOUD_SORTING_VALUE2</option>
                 </field>
-                <field name="reverse" type="radio" default="0" label="MOD_CEDCUSTOMTAGSCLOUD_REVERSE_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_REVERSE_DESC" class=".btn-group">
+                <field name="reverse" type="radio" default="0" label="MOD_CEDCUSTOMTAGSCLOUD_REVERSE_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_REVERSE_DESC"
+                       class="myCustomClass">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
             </fieldset>
             <fieldset name="advanced">
-                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+            	<field name="layout" required="false" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
                 <field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
                 <field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
                     <option value="1">JGLOBAL_USE_GLOBAL </option>
