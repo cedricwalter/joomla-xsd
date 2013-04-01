@@ -12,7 +12,7 @@
                 <xs:element name="authorUrl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="copyright" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="license" type="xs:string" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="version" type="version" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="version" type="versionType" minOccurs="1" maxOccurs="1"/>
                 <xs:element name="creationDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="description" type="xs:normalizedString"/>
 
@@ -31,21 +31,21 @@
                 <xs:element name="install" type="sql" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="uninstall" type="sql" minOccurs="0" maxOccurs="1"/>
 
-                <xs:element name="languages" type="languages" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="languages" type="languagesType" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="update" type="update" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="files" type="files" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="files" type="filesType" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="media" type="media" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="administration" type="administration" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="updateservers" type="updateservers" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="updateservers" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="tables" type="tables" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="dependencies" type="dependencies" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="config" type="config" minOccurs="0" maxOccurs="1"/>
             </xs:all>
 
-            <xs:attribute name="method" default="upgrade" type="method"/>
-            <xs:attribute name="type" use="required" type="type"/>
+            <xs:attribute name="method" default="upgrade" type="methodType"/>
+            <xs:attribute name="type" use="required" type="typeType"/>
             <xs:attribute name="version" use="required" type="cmsversion"/>
         </xs:complexType>
     </xs:element>
-
+   
 </xs:schema>

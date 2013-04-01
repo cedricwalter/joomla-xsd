@@ -16,23 +16,52 @@
                 <xs:element name="authorUrl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="copyright" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="license" type="xs:string" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="version" type="version" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="version" type="versionType" minOccurs="1" maxOccurs="1"/>
                 <xs:element name="creationDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="description" type="xs:normalizedString" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="scriptfile" type="validScript" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="install" type="sql" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="uninstall" type="sql" minOccurs="0" maxOccurs="1"/>
 
-                <xs:element name="languages" type="languages" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="languages" type="languagesType" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="update" type="update" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="files" type="files" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="files" type="filesType" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="media" type="media" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="config" type="config" minOccurs="0" maxOccurs="1"/>
             </xs:all>
-            <xs:attribute name="group" use="required" type="xs:string"/>
-            <xs:attribute name="method" use="required" type="method"/>
-            <xs:attribute name="type" use="required" type="type"/>
-            <xs:attribute name="version" use="required" type="version"/>
+            <xs:attribute name="group" use="required" type="groupType"/>
+            <xs:attribute name="method" use="required" type="methodType"/>
+            <xs:attribute name="type" use="required" type="typeType"/>
+            <xs:attribute name="version" use="required" type="versionType"/>
         </xs:complexType>
     </xs:element>
+
+    <xs:simpleType name="groupType">
+        <xs:union memberTypes="groupTypeEnum groupTypeAnyString"/>
+    </xs:simpleType>
+    <xs:simpleType name="groupTypeEnum">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">The group name specifies for which group of plugins the new plugin is available. The existing groups are the folder names within the directory /plugins. 
+                The installer will create new folder names for group names that do not exist yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="authentication"/>
+            <xs:enumeration value="captcha"/>
+            <xs:enumeration value="content"/>
+            <xs:enumeration value="editors"/>
+            <xs:enumeration value="editors-xtd"/>
+            <xs:enumeration value="extension"/>
+            <xs:enumeration value="finder"/>
+            <xs:enumeration value="quickicon"/>
+            <xs:enumeration value="search"/>
+            <xs:enumeration value="system"/>
+            <xs:enumeration value="user"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="groupTypeAnyString">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+
 </xs:schema>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-    <xs:simpleType name="method">
+    <xs:simpleType name="methodType">
         <xs:annotation>
             <xs:documentation xml:lang="en">The default value install will be also used if the method attribute is not used. The install value means the
                 installer will gracefully stop if it finds any existing file/folder of the new extension.
@@ -13,7 +13,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="type">
+    <xs:simpleType name="typeType">
         <xs:annotation>
             <xs:documentation xml:lang="en">This attribute describes the type of the extension for the installer. Based on this type further requirements to
                 sub-tags apply.
@@ -42,7 +42,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="version">
+    <xs:simpleType name="versionType">
         <xs:annotation>
             <xs:documentation xml:lang="en">String that identifies the version of your extension.</xs:documentation>
         </xs:annotation>
@@ -50,9 +50,8 @@
             <xs:pattern value="[.0-9]*"/>
         </xs:restriction>
     </xs:simpleType>
-
-
-    <xs:simpleType name="client">
+    
+    <xs:simpleType name="clientType">
         <xs:annotation>
             <xs:documentation xml:lang="en">The client attribute allows you to specify for which application client the new module is available.
             </xs:documentation>
@@ -83,26 +82,36 @@
         <xs:all>
             <xs:element name="menu" type="menu" minOccurs="0" maxOccurs="1"/>
             <xs:element name="submenu" type="submenu"  minOccurs="0" maxOccurs="1"/>
-            <xs:element name="files" type="files"/>
-            <xs:element name="languages" type="languages" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="files" type="filesType"/>
+            <xs:element name="languages" type="languagesType" minOccurs="0" maxOccurs="1"/>
         </xs:all>
     </xs:complexType>
 
-    <xs:complexType name="updateservers">
-        <xs:sequence>
-            <xs:element name="server" maxOccurs="unbounded" type="server"/>
-        </xs:sequence>
-    </xs:complexType>
 
-    <xs:complexType name="server">
-        <xs:simpleContent>
-            <xs:extension base="xs:anyURI">
-                <xs:attribute name="name" use="required"/>
-                <xs:attribute name="priority" use="required" type="xs:integer"/>
-                <xs:attribute name="type" use="required" type="xs:NCName"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
+    <xs:element name="updateservers">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="server"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="server">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:anyURI">
+                    <xs:attribute name="name" use="required"/>
+                    <xs:attribute name="priority" use="required" type="xs:integer"/>
+                    <xs:attribute name="type" use="required" type="serverTypeType"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="serverTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="extension"/>
+            <xs:enumeration value="collection"/>
+        </xs:restriction>
+    </xs:simpleType>   
 
     <xs:complexType name="update">
         <xs:sequence>
@@ -127,14 +136,14 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="languages">
+    <xs:complexType name="languagesType">
         <xs:sequence>
-            <xs:element name="language" type="language" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="language" type="languageType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="folder" type="xs:string"/>
     </xs:complexType>
 
-    <xs:complexType name="language">
+    <xs:complexType name="languageType">
         <xs:simpleContent>
             <xs:extension base="validFilePath">
                 <xs:attribute name="tag" use="required" type="locales"/>
@@ -183,7 +192,7 @@
         <xs:attribute name="required" use="optional" type="xs:boolean"/>
     </xs:complexType>
 
-    <xs:simpleType name="fieldClassType">
+      <xs:simpleType name="fieldClassType">
         <xs:union memberTypes="fieldClassEnum fieldClassAnyString"/>
       </xs:simpleType>
       <xs:simpleType name="fieldClassEnum">
@@ -236,14 +245,14 @@
         <xs:attribute name="folder" type="xs:NCName"/>
     </xs:complexType>
 
-    <xs:complexType name="files">
+    <xs:complexType name="filesType">
         <xs:all>
-            <xs:element name="filename" type="filename" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="folder" type="folder" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="filename" type="filename" minOccurs="0" maxOccurs="unbounded"/>
         </xs:all>
         <xs:attribute name="folder" use="optional"/>
     </xs:complexType>
-
+    
     <xs:complexType name="filename">
         <xs:simpleContent>
             <xs:extension base="validFilePath">
@@ -288,7 +297,7 @@
         <xs:attribute name="name" use="required" type="xs:NCName"/>
         <xs:attribute name="operator" use="required" type="dependencyOperatorType"/>
         <xs:attribute name="type" use="required" type="dependencyType"/>
-        <xs:attribute name="version" use="required" type="version"/>
+        <xs:attribute name="version" use="required" type="versionType"/>
     </xs:complexType>
 
     <xs:simpleType name="dependencyOperatorType">
