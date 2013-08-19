@@ -287,8 +287,8 @@
 
     <xs:simpleType name="cssClassType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[a-zA-Z-]*"></xs:pattern>
-            <!-- todo w3c valid css classname \.-?[_a-zA-Z-]+[_a-zA-Z0-9-]*\s* add also repeition with space classname-->
+            <!-- http://www.w3.org/TR/CSS21/grammar.html#scanner -->
+            <xs:pattern value="(.-?[_a-zA-Z]+[_a-zA-Z0-9-]*\s*)*"></xs:pattern>
         </xs:restriction>
     </xs:simpleType>
     
