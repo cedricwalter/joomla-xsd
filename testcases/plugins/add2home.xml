@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension xsi:noNamespaceSchemaLocation="../../plugin.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  version="2.5" type="plugin" group="system" method="upgrade">
+    <name>add2home</name>
+    <author>Cedric Walter</author>
+    <creationDate>14.05.2011</creationDate>
+	<copyright>Copyright (C) 2011-2013 waltercedric.com All rights reserved.</copyright>
+    <license>GNU/GPL 3.0 for Joomla! + MIT license for add2home</license>
+    <authorEmail>cedric.walter@gmail.com</authorEmail>
+    <authorUrl>www.waltercedric.com</authorUrl>
+    <version>1.7.4</version>
+    <description>The plugin places a floating balloon inviting the user to add your application to the home screen.
+        iPhone does not support fixed positioned elements, so the message has to be relocated on each page scroll.
+
+        The code is compatible with iPhone/iPod touch, iPhone4 and iPad. On older devices the “add” icon is a “+” while
+        on iOS 4.2 it has been replaced with . The script detects the OS version and displays the appropriate icon.
+
+        The message appears after 2 seconds (customizable) from page load, and is destroyed after 20 seconds (also
+        customizable). The balloon enters and exits the screen with a quick configurable animation: drop from top,
+        bubble from bottom or fade in/out.
+
+        The balloon can be dismissed any time by tapping the small “x” icon.
+
+        all credits http://cubiq.org/add-to-home-screen, version 2.0.5
+    </description>
+
+    <files>
+        <filename plugin="add2home">add2home.php</filename>
+        <filename plugin="add2home">license.txt</filename>
+    </files>
+
+    <media destination="plg_system_add2home">
+
+        <filename>add2home.js</filename>
+
+        <filename>add2home_ipod.css</filename>
+        <filename>add2home_retina.css</filename>
+        <filename>add2home_ipad.css</filename>
+        <filename>index.html</filename>
+
+        <filename>icon_ipad.png</filename>
+        <filename>icon_ipod.png</filename>
+        <filename>icon_retina.png</filename>
+
+        <filename>startupIPhone.png</filename>
+        <filename>startupImageIpadLandscape.png</filename>
+        <filename>startupImageIpadPortrait.png</filename>
+    </media>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_system_add2home.ini</language>
+    </languages>
+
+    <!-- Extension Update Specification -->
+    <updateservers>
+        <!-- Note: No spaces or linebreaks allowed between the server tags -->
+        <server type="extension" priority="1" name="Extension Update Site">http://updates.waltercedric.com/plugins/add2home/extension.xml</server>
+        <server type="collection" priority="2" name="Collection Update Site">http://updates.waltercedric.com/update.xml</server>
+    </updateservers>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="enabled" type="radio" default="1" label="Enabled"
+                       description="ENABLED" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="returningVisitor" type="radio" default="true" label="Returning Visitor"
+                       description="This is a very important feature that I highly encourage you to use (ie: set it to true). What it does is to show the message to returning visitors only. The first time a user accesses your site the message is not shown. If the user comes back within a 28 days timeframe, the message is finally presented.
+                       To prevent the balloon from appearing once the app has been added to the home screen, remember to set also apple-mobile-web-app-capable to true.
+                       Default is TRUE." class="btn-group" >
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+                <field name="autostart" type="radio" default="true" label="Autostart"
+                       description="Should the balloon be automatically initiated? Default: true." class="btn-group">
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="Animation" label="Animation">
+                <field name="animationIn" type="radio" default="drop"
+                       label="Animation In"
+                       description="the animation the balloon appears with. Can be: drop, bubble and fade. Default: drop." class="btn-group">
+                    <option value="drop">drop</option>
+                    <option value="bubble">bubble</option>
+                    <option value="fade">fade</option>
+                </field>
+                <field name="animationOut" type="radio" default="fade"
+                       label="Animation Out"
+                       description="the animation the balloon exits with. Can be: drop, bubble and fade. Default: fade." class="btn-group">
+                    <option value="drop">drop</option>
+                    <option value="bubble">bubble</option>
+                    <option value="fade">fade</option>
+                </field>
+                <field name="startDelay" type="text" default="2000"
+                       required="true"
+                       label="Start Delay" description="milliseconds to wait before showing the message. Default: 2000"
+                       size="6"/>
+            </fieldset>
+
+            <fieldset name="Cache" label="Cache">
+                <field name="lifespan" type="text" default="20000"
+                       required="true"
+                       label="lifespan (ms)"
+                       description="milliseconds to wait before hiding the message. Default: 20000"
+                       size="6"/>
+                <field name="expire" type="text" default="0"
+                       label="expire (min)"
+                       required="true"
+                       description="minutes before displaying the message again. If you don’t want to show the message at each and every page load, you can set a timeframe in minutes. The message will be shown only one time inside that timeframe. Default: 0 (=always show)."
+                       size="2"/>
+            </fieldset>
+
+            <fieldset name="Message" label="Message">
+                <field name="bottomOffset" type="text" default="14"
+                       label="Bottom Offset"
+                       required="true"
+                       description="distance in pixels from the bottom (iPhone) or the top (iPad). Default: 14"
+                       size="4"/>
+                <field name="customMessageYes" type="radio" default="0" label="Custom Message?"
+                       description="Use Custom Message?" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="customMessage" type="textarea" cols="20" rows="10"
+                       default="Install this app on your %device: tap %icon and then Add to Home Screen."
+                       label="Custom Message"
+                       description="Define a custom message to display OR set a fixed locale. If you don’t like the default message we have chosen for you, you can add your own. You can also force a language by passing the respective locale (eg: ‘en_us’ will always display the English message). Default: ” (=script decides)."
+                       size="40"/>
+                <field name="touchIcon" type="radio" default="true" label="TouchIcon"
+                       description=" if set to true, the script checks for link rel='apple-touch-icon' in the page HEAD and displays the application icon next to the message. Default: false."
+                       class="btn-group">
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+                <field name="arrow" type="radio" default="true" label="Arrow"
+                       description=" shows the little arrow pointing the bottom bar “add” icon. For custom designs you may want to disable it (ie: set it to false). Default: true."
+                       class="btn-group">
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+                <field name="closeButton" type="radio" default="true" label="Let the user close the balloon"
+                                       description="Let the user close the balloon. Default: true."
+                                       class="btn-group">
+                                    <option value="true">JYES</option>
+                                    <option value="false">JNO</option>
+                 </field>
+
+            </fieldset>
+
+            <fieldset name="StartupImage" label="Startup Image">
+                <field name="hasStartupImage" type="radio" default="1" label="Specifying a Startup Image"
+                       description="iOS Note: Specifying a startup image is available in iOS 3.0 and later.
+                               On iOS, similar to native applications, you can specify a startup image that is displayed while your web application launches.
+                               This is especially useful when your web application is offline."
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="startupImageIphone" type="text" default="media/plg_system_add2home/startupIPhone.png"
+                       label="iPhone Custom startup image (320 x 460 pixels)"
+                       required="true"
+                       description="On iPhone and iPod touch, the image must be 320 x 460 pixels and in portrait orientation.(20 pixels are used to display the top status bar with information about the phone carrier, battery, time, etc.). If you use PNG images with the same proportions Safari should be able to re-scale them."
+                       size="40"/>
+                <field name="startupImageIpadLandscape" type="text"
+                       default="media/plg_system_add2home/startupImageIpadLandscape.png"
+                       label="iPad Custom startup Landscape image (748 x 1024 pixels)"
+                       required="true"
+                       description="On iPad, the image must be 748 x 1024 pixels pixels and in lanscape orientation.(20 pixels are used to display the top status bar with information about the phone carrier, battery, time, etc.). If you use PNG images with the same proportions Safari should be able to re-scale them."
+                       size="40"/>
+                <field name="startupImageIpadPortrait" type="text"
+                       default="media/plg_system_add2home/startupImageIpadPortrait.png"
+                       label="iPad Custom startup Portrait image (768 x 1004 pixels)"
+                       required="true"
+                       description="On iPad, the image must be 768 x 1004 pixels pixels and in portrait orientation.(20 pixels are used to display the top status bar with information about the phone carrier, battery, time, etc.). If you use PNG images with the same proportions Safari should be able to re-scale them."
+                       size="40"/>
+
+
+            </fieldset>
+
+
+            <fieldset name="Status-bar" label="Status-bar">
+
+                <field name="web-app-status-bar-style" type="radio" default="true"
+                       label="Sets the style of the status bar"
+                       description="Sets the style of the status bar for a web application." class="btn-group">
+                    <option value="true">JYES</option>
+                    <option value="false">JNO</option>
+                </field>
+                <field name="web-app-status-bar-style-content" type="radio" default="default"
+                       label="Sets the style of the status bar"
+                       description="This meta tag has no effect unless you first specify full-screen mode as described in apple-mobile-web-app-capable.
+                       If content is set to default, the status bar appears normal. If set to black, the status bar has a black background. If set to black-translucent, the status bar is black and translucent. If set to default or black, the web content is displayed below the status bar. If set to black-translucent, the web content is displayed on the entire screen, partially obscured by the status bar. The default value is default."
+                       class="btn-group">
+                    <option value="default">default</option>
+                    <option value="black">black</option>
+                    <option value="black-translucent">black-translucent</option>
+                </field>
+
+
+            </fieldset>
+
+            <fieldset name="Viewport" label="Viewport">
+                <field name="webapp" type="radio" default="1" label="apple-mobile-web-app-capable"
+                       description="apple-mobile-web-app-capable : To prevent the balloon from appearing once the app has been added to the home screen, remember to set to true. If content is set to yes, the web application runs in full-screen mode; otherwise, it does not.
+                               The default behavior is to use Safari to display web content. if set to false, you CAN NOT USE custom startup images"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="webapp-links" type="radio" default="1"
+                       label="webapp-links"
+                       description="Using this on all your internal links you can make your entire site appear to be working outside of safari. This work by adding target=_webapp to all your links"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="hasViewport" type="radio" default="0" label="Use Viewport"
+                       description="Tells the browser to adjust the site to the width of the device, which means your site will fill the entire screen."
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <field name="viewport" type="radio" default="width=device-width"
+                       label="Changes the logical window size"
+                       description="Tells the browser to adjust the site to the width of the device, which means your site will fill the entire screen."
+                       class="btn-group">
+                    <option value="width = device-width">width of the device</option>
+                    <option value="initial-scale = 1.0">initial-scale 1.0</option>
+                </field>
+
+                <field name="userScaling" type="radio" default="user-scalable=yes" label="Turn off user scaling"
+                       description="Determines whether or not the user can zoom in and out—whether or not the user can change the scale of the viewport. Set to yes to allow scaling and no to disallow scaling. The default is yes.Setting user-scalable to no also prevents a webpage from scrolling when entering text in an input field."
+                       class="btn-group">
+                    <option value="user-scalable=yes">JYES</option>
+                    <option value="user-scalable=no">JNO</option>
+                </field>
+
+                <field name="width" type="text" default="980"
+                       label="Width"
+                       required="true"
+                       description="The width of the viewport in pixels. The default is 980. The range is from 200 to 10,000."
+                       size="4"/>
+                <field name="Height" type="text" default="223"
+                       label="height"
+                       required="true"
+                       description="The height of the viewport in pixels. The default is calculated based on the value of the width property and the aspect ratio of the device. The range is from 223 to 10,000 pixels."
+                       size="4"/>
+
+                <field name="maximum-scale" type="text" default="1.6"
+                       label="Maximum-scale"
+                       required="true"
+                       description="Specifies the maximum scale value of the viewport. The default is 1.6. The range is from >0 to 10.0."
+                       size="4"/>
+                <field name="minimum-scale" type="text" default="0.25"
+                       label="Minimum-scale"
+                       required="true"
+                       description="Specifies the minimum scale value of the viewport. The default is 0.25. The range is from >0 to 10.0."
+                       size="4"/>
+            </fieldset>
+
+
+            <fieldset name="Icon" label="Icon">
+                <field name="precomposed" type="radio" default="-precomposed" label="Precomposed"
+                       description="This stops mobile Safari adding any effects to the icon (gloss effects)" class="btn-group">
+                    <option value="">No effect</option>
+                    <option value="-precomposed">Gloss</option>
+                </field>
+                <field name="iconMessage" type="text" default="media/plg_system_add2home/icon_ipod.png"
+                       label="Icon for Message"
+                       required="true"
+                       description="This type of icon needs to be a PNG or JPG. Path to a picture of 57x57 pixels"
+                       size="40"/>
+
+                <field name="iconIphone" type="text" default="media/plg_system_add2home/icon_ipod.png"
+                       label="Icon for Ipod"
+                       required="true"
+                       description="This type of icon needs to be a PNG or JPG. Path to a picture of 57x57 pixels"
+                       size="40"/>
+                <field name="iconRetina" type="text" default="media/plg_system_add2home/icon_retina.png"
+                       label="Icon for Retina"
+                       required="true"
+                       description="This type of icon needs to be a PNG or JPG. Path to a picture of 114x114 pixels"
+                       size="40"/>
+                <field name="iconIpad" type="text" default="media/plg_system_add2home/icon_ipad.png"
+                       label="Icon for Ipad"
+                       required="true"
+                       description="This type of icon needs to be a PNG or JPG. Path to a picture of 72x72 pixels"
+                       size="40"/>
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>

@@ -1,0 +1,43 @@
+Changes
+
+Support for Joomla 3.1.5!
+
+component / module / plugins
+* add in <menu> support for attribute value img="class:banners">
+* add in <menu> support for attribute value view="anyString"
+* add in <menu> support for attribute value alt="anyString"
+* add to type="cmsVersionType" version 3.1
+* add support for <menu link="option=com_finder">COM_FINDER</menu> (finder.xml)
+* In <extension> attribute value method="" is now optional		 
+* add new <help key="ANY_STRING" />
+* add in <field> support for attribute value first="anyNumber"
+* add in <field> support for attribute value last="anyNumber"
+* add in <field> support for attribute value step="anyNumber"
+* add in <field> support for attribute value published=""   (mod_articles_category.xml)
+* add in <field> support for attribute value format="%Y-%m-%d %H:%M:%S"
+* add in <field> support for attribute value disable="separator" (mod_login.xml)
+* add in <fields> support for attribute value addfieldpath="validPath" (mod_finder.xml)
+* in <field> validate css class names class="btn-group" or class="btn-group btn1 blue" or class=""
+* Allow empty <fields> without fieldset  (vote.xml)
+		<fields name="params">
+		</fields>
+* In <authorEmail> consider N/A as a valid email
+* Attribute 'label' now optional on element 'field'.
+	 <field name="spacer3" type="spacer" hr="true" />
+* Support for validate <field> type="url"		(sef.xml)
+* in <fieldset> allow Attribute value label="" to appear in element (debug.xml)
+* allow <field> to have type attribute value category (contactcreator.xml)
+* allow <field> to have new attribute extension=com_* (contactcreator.xml)
+* In <media>  attribute destination value is now optional
+* In <fieldset> add optional addfieldpath="" and validate that it is a valid path
+* In <option value="" empty values are now allowed
+* <updateservers> is now available in plugins manifests
+* In <field> type now support type="modal_article" or from enum (using xsd union)
+
+Plugins	only
+* in <file plugin="weblinks">weblinks.php</file>
+
+Template only
+* In <extension> attribute value method="" is now optionnal
+* In <extension> addattribute value client="" 
+* add <languages></languages>

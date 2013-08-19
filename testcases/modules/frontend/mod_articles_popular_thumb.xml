@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension xsi:noNamespaceSchemaLocation="../../../module.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  type="module" version="2.5" client="site" method="upgrade">
+    <!--
+    xsi:noNamespaceSchemaLocation="./module.xsd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> -->
+    <name>cedThumbnails - Popular Articles</name>
+    <creationDate>01.04.2013</creationDate>
+    <author>Cedric Walter</author>
+    <authorUrl>www.waltercedric.com</authorUrl>
+    <copyright>(C)2008-2013 Cedric Walter. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <version>2.6.2</version>
+    <authorEmail>cedric.walter@gmail.com</authorEmail>
+    <description>DESCMOSTREAD</description>
+    <languages>
+        <language tag="en-GB">en-GB.mod_articles_popular_thumb.ini</language>
+        <language tag="en-GB">en-GB.mod_articles_popular_thumb.sys.ini</language>
+    </languages>
+    <media>
+        <folder>mod_articles_popular_thumb</folder>
+    </media>
+    <files>
+        <filename module="mod_articles_popular_thumb">mod_articles_popular_thumb.php</filename>
+        <filename>mod_articles_popular_thumb.xml</filename>
+        <filename>helper.php</filename>
+        <filename>index.html</filename>
+        <folder>tmpl</folder>
+    </files>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                        id="catid"
+                        name="catid"
+                        type="category"
+                        extension="com_content"
+                        label="JCATEGORY"
+                        description="MOD_POPULAR_FIELD_CATEGORY_DESC"
+                        default=""
+                        class="inputbox">
+                    <option value="">JOPTION_ANY_CATEGORY</option>
+                </field>
+                <field name="show_front" type="radio" default="1" label="Frontpage Items" description="PARAMFRONTPAGEITEMS" class="btn-group">
+                    <option value="1">show</option>
+                    <option value="0">hide</option>
+                </field>
+                <field name="count" type="text" default="5" required="true" label="Count" description="PARAMCOUNT" size="2"/>
+            </fieldset>
+            <fieldset name="Thumbnails" label="Thumbnails">
+                <field name="useThumbnails" type="radio" default="1" label="Use images thumbnails" description="USEIMAGESTHUMBNAILSDESC"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="originThumbnails" type="list" default="0" size="7" label="Thumbnails source" description="USEIMAGESTHUMBNAILSDESC">
+                    <option value="0">search in intro text -> use intro image -> in full text -> use full article image</option>
+                    <option value="1">search in intro text only</option>
+                    <option value="11">search in intro text -> use intro image</option>
+                    <option value="111">search in intro image</option>
+                    <option value="2">search in full text only</option>
+                    <option value="22">search in full text -> use full article image</option>
+                    <option value="222">search in full article image</option>
+                    <option value="3">search in intro text -> in full text</option>
+                    <option value="4">search in full text -> in intro text</option>
+                </field>
+                <field name="useDefaultImage" type="radio" default="1" label="Use default image"
+                       description="Use a default image when no image is found in introduction article"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="thumbnailWidth" type="text" default="90" required="true" label="Thumbnail Width" description="THUMBNAILWIDTHDESC" size="3"/>
+                <field name="thumbnailHeight" type="text" default="90" required="true" label="Thumbnail height" description="THUMBNAILHEIGHTDESC" size="3"/>
+                <field name="defaultImage" type="text" default="media/plg_content_relatedthumbitems/default.jpg" size="50" required="true" label="Default"
+                       description="Default image thumbnail when no image is found in article introtext, fulltext, if relative do not put / in front, default image is a blank jpg"/>
+                <field name="defaultImageAlt" type="text" default="default thumbnail image alt" size="50" required="true" label="Alt text"
+                       description="Alternative text used for visitors without access to images. Replaced with caption text if it is present."/>
+                <field name="defaultImageCaption" type="text" default="default thumbnail image caption" size="50" required="true" label="Caption"
+                       description="Caption attached to the image"/>
+                <field name="limit" type="text" default="4" required="true" label="How many items will be display?" description="SELECTANUMBERDESC" size="2"/>
+            </fieldset>
+            <fieldset name="Resizing" label="Resizing">
+                <field name="resizingStrategy" type="radio" default="wideimage" label="Resizing Strategy"
+                       description="Only apply to Joomla 2.5.
+                       If you are using Joomla 2.5, the build in library JImage can be used instead of wideImage,
+                       Attention JIMage do not support the creation of thumbnails when images are not located on your server (remote)!">
+                    <option value="jimage">JImage</option>
+                    <option value="wideimage">WideImage</option>
+                </field>
+                <field name="resize" type="list" default="fill" size="3" label="WideImage Resize"
+                       description="You can resize images by passing this parameters">
+                    <option value="inside">inside: image fits the given dimensions from the inside, aspect ratio will be kept.</option>
+                    <option value="outside">outside: image will be at least as big as XxY, aspect ratio will be kept.</option>
+                    <option value="fill">fill: image will be stretched as necessary, aspect ratio may not be kept.</option>
+                </field>
+                <field name="scale" type="list" default="any" size="3" label="WideImage Scale" description="determines when to scale an image">
+                    <option value="any">any: resize regardless of the image size.</option>
+                    <option value="up">up: resize if image is smaller than the new dimensions.</option>
+                    <option value="down">down: resize if image is larger than the new dimensions.</option>
+                </field>
+                <field name="jimageResize" type="list" default="1" size="4" label="JImage Resize" description="determines when to scale an image">
+                    <option value="1">Gives you a thumbnail of the exact size, stretched or squished to fit the parameters.</option>
+                    <option value="2">Fits your thumbnail within your given parameters. It will not be any taller or wider than the size passed, whichever is
+                        larger.
+                    </option>
+                    <option value="3">Fits your thumbnail to the given parameters. It will be as tall or as wide as the size passed, whichever is smaller.
+                    </option>
+                    <option value="4">Gives you a thumbnail of the exact size, cropped from the center of the full sized image.</option>
+                </field>
+            </fieldset>
+            <fieldset name="Date" label="Date">
+                <field name="showDate" type="radio" default="1" label="Display Date"
+                       description="PLG_CONTENT_RELATEDTHUMBITEMS_DISPLAYDATEAFTERTHEARTICLELINKDESC"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="date_format" type="text" default="%Y-%m-%d" label="Date format" required="true"
+                       description="Date format, has to be a valid PHP date format"/>
+                <field name="showDateInDays" type="radio" default="1" label="Show Date In Days" description="SHOWDATINDAYSDESC"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="textDaysAgo" type="text" default="days ago" label="Text for xxx days ago" description="TEXTTOBEINSERTEDAFTERDATE"/>
+            </fieldset>
+            <fieldset name="Text" label="Text">
+                <field name="textbefore" type="text" default="Related Posts:" size="20" label="Text before" description="TEXTTOBEINSERTEDBEFORELISTDESC"/>
+                <field name="textafter" type="text" default="" label="Text after" size="20" description="TEXTTOBEINSERTEDAFTERLISTDESC"/>
+            </fieldset>
+            <fieldset name="Title" label="Title">
+                <field name="useTitle" type="radio" default="1" label="Use Title" description="USETITLE" class="btn-group">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="titleLength" type="text" default="15" required="true" label="Title Size"
+                       description="Number of Characters to be trimmed from title" size="3"/>
+            </fieldset>
+            <fieldset name="Teaser" label="Teaser">
+                <field name="useTeaser" type="radio" default="1" label="Use Text Teaser" description="USETEASER" class="btn-group">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="useTeaser" type="radio" default="1" label="Use Text Teaser" description="USETEASER" class="btn-group">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="teaserLength" type="text" default="100" required="true" size="4" label="Intro text Length" description="DESCRIPTIONLENGTHDESC"/>
+                <field name="teaserEnding" type="text" required="false" default="" label="Teaser ending" description="TEASERENDING" size="20"/>
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+                <field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC"/>
+                <field name="cachemode" type="hidden" default="static">
+                    <option value="static"/>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

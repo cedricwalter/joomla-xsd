@@ -25,16 +25,28 @@
 
                 <xs:element name="languages" type="languagesType" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="update" type="update" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="files" type="filesType" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="files" type="pluginFilesType" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="updateservers" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="media" type="media" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="config" type="config" minOccurs="0" maxOccurs="1"/>
             </xs:all>
             <xs:attribute name="group" use="required" type="groupType"/>
-            <xs:attribute name="method" use="required" type="methodType"/>
+            <xs:attribute name="method" use="optional" type="methodType"/> <!-- some joomla extensions do not have one -->
             <xs:attribute name="type" use="required" type="typeType"/>
             <xs:attribute name="version" use="required" type="versionType"/>
         </xs:complexType>
     </xs:element>
+
+    <xs:complexType name="pluginFilesType">
+        <xs:all>
+            <xs:element name="folder" type="folder" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="file" type="filename" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="filename" type="filename" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:all>
+        <xs:attribute name="folder" use="optional"/>
+        <xs:attribute name="plugin" use="optional"/>
+        
+    </xs:complexType>
 
     <xs:simpleType name="groupType">
         <xs:union memberTypes="groupTypeEnum groupTypeAnyString"/>

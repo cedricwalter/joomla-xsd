@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension xsi:noNamespaceSchemaLocation="../../plugin.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  version="2.5" type="plugin" group="content" method="upgrade">
+    <name>Content - relatedthumbarticles</name>
+    <author>Cedric Walter</author>
+    <creationDate>01.04.2013</creationDate>
+    <copyright>(c) 2011-2013 Cedric Walter www.waltercedric.com</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <authorEmail>cedric.walter@gmail.com</authorEmail>
+    <authorUrl>www.waltercedric.com</authorUrl>
+    <version>2.6.4</version>
+    <description>This Joomla plugin will dynamically list down the links to related articles for the displayed article.</description>
+
+    <files>
+        <filename plugin="relatedthumbarticles">relatedthumbarticles.php</filename>
+        <filename>index.html</filename>
+        <folder>relatedthumbarticles</folder>
+        <folder>language</folder>
+    </files>
+
+    <media>
+        <folder>plg_content_relatedthumbarticles</folder>
+    </media>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="demo" type="radio" default="0" label="Demo mode"
+                       description="this will put the plugin in demo mdoe and output all kind og style to let you better decide what is fitting best to your site"
+                       class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="position" type="list" default="1" label="Position" description="POSITIONDESC">
+                    <option value="0">Before content text articles</option>
+                    <option value="1">After content text articles</option>
+                </field>
+                <field name="removeCopyright" type="radio" default="0" label="Remove Copyright" description="Display Copyright. Default is No." class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+            </fieldset>
+            <fieldset name="Filter" label="Filter">
+                <field name="filterFeatured" type="radio" default="show" label="Filter Featured" description="" class="btn-group">
+                    <option value="hide">hide</option>
+                    <option value="only">only</option>
+                    <option value="show">show</option>
+                </field>
+                <field name="filterAccess" type="radio" default="1" label="Filter by access"
+                       description="If No this will show articles that should not be seen to the current usergroup." class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="filterLanguage" type="radio" default="1" label="Filter by Language" description="" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+            </fieldset>
+            <fieldset name="Style" label="Style">
+                <field name="style" type="list" default="horizontal" label="Style" description="STYLEDESC">
+                    <option value="horizontal">Horizontal</option>
+                    <option value="vertical">Vertical</option>
+                    <option value="matrix">Matrix</option>
+                    <option value="postsslideouts">RelatedPostsSlideOuts (JQuery 1.5)</option>
+                    <option value="accordionVerticalMootols">Vertical Accordion with Mootools</option>
+                    <option value="jquerynewsticker">jquerynewsticker</option>
+                </field>
+                <field name="matrixLimit" type="text" default="4" required="true" label="Matrix Limit, N x N"
+                       description="Display a matrix of N x N images" size="2"/>
+            </fieldset>
+            <fieldset name="Content" label="Origin of Related Items">
+                <field name="includedCatIds" type="category" extension="com_content"
+                       required="true"
+                       multiple="true" size="10" default="" label="JCATEGORY"
+                       description="MOD_LATEST_NEWS_FIELD_CATEGORY_DESC">
+                    <option value="">JOPTION_ALL_CATEGORIES</option>
+                </field>
+
+                <field name="searchMode" type="list" default="Category" label="Search mode" description="Search mode">
+                    <option value="Metakeys">Search related articles using Metakeys</option>
+                    <option value="Category">Use related article in same category</option>
+                    <option value="JoomlaTag">Use joomla tag</option>
+                </field>
+
+                <field name="joomlaTagSimilarity" type="list" default="Category" label="Joomla Tag similarity" description="If you use 'Search mode' = 'Use joomla tag' set how to match for related articles">
+                    <option value="All">Display all articles that have also all tags in common of current article.</option>
+                    <option value="Some_1">Display all article that have at least 1 tags in common of current article.</option>
+                    <option value="Some_2">Display all article that have at least 2 tags in common of current article.</option>
+                    <option value="Some_3">Display all article that have at least 3 tags in common of current article.</option>
+                    <option value="Some_4">Display all article that have at least 4 tags in common of current article.</option>
+                </field>
+
+
+                <field name="orderby" type="list" default="created" label="Category Ordering" description="ORDERINGBYDESC">
+                    <option value="id">By ID</option>
+                    <option value="created">By Date</option>
+                    <option value="title">By Title</option>
+                </field>
+                <field name="orderby2" type="list" default="DESC" label="Category direction" description="SELECTAJNORDERINGDESC">
+                    <option value="DESC">Newest first</option>
+                    <option value="ASC">Oldest first</option>
+                </field>
+                <field name="random" type="radio" default="0" label="Random"
+                       description="Display related items ramdomly from within category, this override 'Category Ordering' and 'Category Direction'" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+            </fieldset>
+            <fieldset name="Thumbnails" label="Thumbnails">
+                <field name="useThumbnails" type="radio" default="1" label="Use images thumbnails" description="USEIMAGESTHUMBNAILSDESC" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="originThumbnails" type="list" default="0" size="7" label="Thumbnails source" description="USEIMAGESTHUMBNAILSDESC">
+                    <option value="0">search in intro text -> use intro image -> in full text -> use full article image</option>
+                    <option value="1">search in intro text only</option>
+                    <option value="11">search in intro text -> use intro image</option>
+                    <option value="111">search in intro image</option>
+                    <option value="2">search in full text only</option>
+                    <option value="22">search in full text -> use full article image</option>
+                    <option value="222">search in full article image</option>
+                    <option value="3">search in intro text -> in full text</option>
+                    <option value="4">search in full text -> in intro text</option>
+                </field>
+                <field name="useDefaultImage" type="radio" default="1" label="Use default image"
+                       description="Use a default image when no image is found in introduction article" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="thumbnailWidth" type="text" default="90" required="true" label="Thumbnail Width" description="THUMBNAILWIDTHDESC" size="3"/>
+                <field name="thumbnailHeight" type="text" default="90" required="true" label="Thumbnail height" description="THUMBNAILHEIGHTDESC" size="3"/>
+                <field name="defaultImage" type="text" default="media/plg_content_relatedthumbarticles/default.jpg" size="50" required="true" label="Default"
+                       description="Default image thumbnail when no image is found in article introtext, fulltext, if relative do not put / in front, default image is a blank jpg"/>
+                <field name="defaultImageAlt" type="text" default="default thumbnail image alt" size="50" required="true" label="Alt text"
+                       description="Alternative text used for visitors without access to images. Replaced with caption text if it is present."/>
+                <field name="defaultImageCaption" type="text" default="default thumbnail image caption" size="50" required="true" label="Caption"
+                       description="Caption attached to the image"/>
+                <field name="limit" type="text" default="4" required="true" label="How many items will be display?" description="SELECTANUMBERDESC" size="2"/>
+            </fieldset>
+            <fieldset name="Resizing" label="Resizing">
+                <field name="resizingStrategy" type="radio" default="wideimage" label="Resizing Strategy"
+                       description="Only apply to Joomla 2.5.
+                       If you are using Joomla 2.5, the build in library JImage can be used instead of wideImage,
+                       Attention JIMage do not support the creation of thumbnails when images are not located on your server (remote)!">
+                    <option value="jimage">JImage</option>
+                    <option value="wideimage">WideImage</option>
+                </field>
+                <field name="resize" type="list" default="fill" size="3" label="WideImage Resize"
+                       description="You can resize images by passing this parameters">
+                    <option value="inside">inside: image fits the given dimensions from the inside, aspect ratio will be kept.</option>
+                    <option value="outside">outside: image will be at least as big as XxY, aspect ratio will be kept.</option>
+                    <option value="fill">fill: image will be stretched as necessary, aspect ratio may not be kept.</option>
+                </field>
+                <field name="scale" type="list" default="any" size="3" label="WideImage Scale" description="determines when to scale an image">
+                    <option value="any">any: resize regardless of the image size.</option>
+                    <option value="up">up: resize if image is smaller than the new dimensions.</option>
+                    <option value="down">down: resize if image is larger than the new dimensions.</option>
+                </field>
+                <field name="jimageResize" type="list" default="1" size="4" label="JImage Resize" description="determines when to scale an image">
+                    <option value="1">Gives you a thumbnail of the exact size, stretched or squished to fit the parameters.</option>
+                    <option value="2">Fits your thumbnail within your given parameters. It will not be any taller or wider than the size passed, whichever is
+                        larger.
+                    </option>
+                    <option value="3">Fits your thumbnail to the given parameters. It will be as tall or as wide as the size passed, whichever is smaller.
+                    </option>
+                    <option value="4">Gives you a thumbnail of the exact size, cropped from the center of the full sized image.</option>
+                </field>
+            </fieldset>
+            <fieldset name="Date" label="Date">
+                <field name="showDate" type="radio" default="1" label="Display Date"
+                       description="PLG_CONTENT_RELATEDTHUMBITEMS_DISPLAYDATEAFTERTHEARTICLELINKDESC" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="date_format" type="text" default="%Y-%m-%d" label="Date format" required="true"
+                       description="Date format, has to be a valid PHP date format"/>
+                <field name="showDateInDays" type="radio" default="1" label="Show Date In Days" description="SHOWDATINDAYSDESC" class="btn-group">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="textDaysAgo" type="text" default="days ago" label="Text for xxx days ago" description="TEXTTOBEINSERTEDAFTERDATE"/>
+            </fieldset>
+            <fieldset name="Text" label="Text">
+                <field name="textbefore" type="text" default="Related Posts:" size="20" label="Text before" description="TEXTTOBEINSERTEDBEFORELISTDESC"/>
+                <field name="textafter" type="text" default="" label="Text after" size="20" description="TEXTTOBEINSERTEDAFTERLISTDESC"/>
+            </fieldset>
+            <fieldset name="Title" label="Title">
+                <field name="useTitle" type="radio" default="1" label="Use Title" description="USETITLE" class="btn-group">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="titleLength" type="text" default="15" required="true" label="Title Size"
+                       description="Number of Characters to be trimmed from title" size="3"/>
+            </fieldset>
+            <fieldset name="Teaser" label="Teaser">
+                <field name="useTeaser" type="radio" default="1" label="Use Text Teaser" description="USETEASER" class="btn-group">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="useTeaser" type="radio" default="1" label="Use Text Teaser" description="USETEASER" class="btn-group">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="teaserLength" type="text" default="100" required="true" size="4" label="Intro text Length" description="DESCRIPTIONLENGTHDESC"/>
+                <field name="teaserEnding" type="text" required="false" default="" label="Teaser ending" description="TEASERENDING" size="20"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

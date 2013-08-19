@@ -39,6 +39,7 @@
             <xs:enumeration value="1.6"/>
             <xs:enumeration value="2.5"/>
             <xs:enumeration value="3.0"/>
+            <xs:enumeration value="3.1"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -47,22 +48,10 @@
             <xs:documentation xml:lang="en">String that identifies the version of your extension.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="[.0-9]*"/>
+            <xs:pattern value="[.0-9]*"/> <!--todo better list as enum -->
         </xs:restriction>
     </xs:simpleType>
     
-    <xs:simpleType name="clientType">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">The client attribute allows you to specify for which application client the new module is available.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="site"/>
-            <xs:enumeration value="administrator"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-
     <xs:complexType name="submenu">
         <xs:sequence>
             <xs:element name="menu" type="menu" maxOccurs="unbounded"/>
@@ -72,11 +61,43 @@
     <xs:complexType name="menu">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="img" type="validFilePath"/>
-                <xs:attribute name="link" type="xs:string"/>
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">The value inside the tag is the menu's label. Unlike Joomla! 1.5, you can not use a natural language string. For example, if you would enter "Example Component" instead of COM_EXAMPLE, it would result in your component name appearing as example-component in the menu and you would be unable to provide a translation. In order to provide a translation you need to create a file named en-GB.com_example.sys.ini in administrator/languages/en-GB </xs:documentation>
+                </xs:annotation>                
+                <xs:attribute name="img" type="menuImageType">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">The (relative) path to an image (16x16 pixels) to appear beside the menu item.
+                            Must be an url compatible as a file too (e.g. no spaces) !</xs:documentation>
+                    </xs:annotation>  
+                </xs:attribute>
+                <xs:attribute name="link" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">A link to send the user to when the menu item is clicked.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="alt" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en"></xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="view" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en"></xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+    
+    <xs:simpleType name="menuImageType">
+        <xs:union memberTypes="validFilePath menuImageClassType"/>
+    </xs:simpleType>
+    <xs:simpleType name="menuImageClassType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="class:[a-zA-Z_-]*"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    
 
     <xs:complexType name="administration">
         <xs:all>
@@ -154,15 +175,16 @@
 
     <xs:complexType name="config">
         <xs:sequence>
-            <xs:element name="fields" type="fields"/>
+            <xs:element name="fields" type="fields" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="fields">
         <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="fieldset" type="fieldset"/>
+            <xs:element name="fieldset" type="fieldset" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
         <xs:attribute name="name" use="required" type="xs:NCName"/>
+        <xs:attribute name="addfieldpath" use="optional" type="validFilePath"/>
     </xs:complexType>
 
     <xs:complexType name="fieldset">
@@ -170,22 +192,30 @@
             <xs:element maxOccurs="unbounded" name="field" type="field"/>
         </xs:sequence>
         <xs:attribute name="name" use="required" type="xs:NCName"/>
+        <xs:attribute name="label" use="optional" type="xs:string"/>
+        <xs:attribute name="addfieldpath" use="optional" type="validFilePath"/>
     </xs:complexType>
 
     <xs:complexType name="field">
         <xs:sequence>
-            <xs:element name="option" minOccurs="0" maxOccurs="unbounded" type="option"/>
+            <xs:element name="option" minOccurs="0" maxOccurs="unbounded" type="optionType"/>
         </xs:sequence>
         <xs:attribute name="name" use="required" type="xs:NCName"/>
         <xs:attribute name="type" use="required" type="fieldType"/>
-        <xs:attribute name="label" use="required" type="xs:string"/>
+        <xs:attribute name="label" use="optional" type="xs:string"/>
         <xs:attribute name="id" type="xs:string"/>
-        <xs:attribute name="class" type="spaceSeparated"/>
-        <xs:attribute name="labelclass" type="spaceSeparated"/>
+        <xs:attribute name="class" type="cssClassType"/>
+        <xs:attribute name="labelclass" type="cssClassType"/>
         <xs:attribute name="value" type="xs:boolean"/>
         <xs:attribute name="default"/>
         <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="disable" type="disableType"/>
+        <xs:attribute name="first" type="xs:int"/>
+        <xs:attribute name="last" type="xs:int"/>
+        <xs:attribute name="step" type="xs:int"/>        
         <xs:attribute name="hint" type="xs:string" />
+        <xs:attribute name="hr" use="optional" type="xs:boolean"/>
+        <xs:attribute name="extension" type="extensionType" />
         <xs:attribute name="required" type="xs:boolean"/>
         <xs:attribute name="multiple" type="xs:boolean"/>
         <xs:attribute name="readonly" type="xs:boolean"/>
@@ -193,12 +223,15 @@
         <xs:attribute name="autofocus" type="xs:boolean"/>
         <xs:attribute name="autocomplete" type="xs:boolean"/>
         <xs:attribute name="spellcheck" type="xs:boolean"/>
+        <xs:attribute name="published" type="xs:string"/>
+        <xs:attribute name="format" type="xs:string"/>   <!--todo %Y-%m-%d %H:%M:%S when type="calendar" -->
         <xs:attribute name="hidden" type="xs:boolean"/>
         <xs:attribute name="inputmode" type="inputmodeType"/>
         <xs:attribute name="size" type="xs:integer"/>
         <xs:attribute name="maxlength" type="xs:integer"/>
         <xs:attribute name="cols" type="xs:integer"/>
         <xs:attribute name="rows" type="xs:integer"/>
+        <xs:attribute name="columns" type="xs:integer"/>
         <xs:attribute name="query"/>
         <xs:attribute name="key_field" type="xs:NCName"/>
         <xs:attribute name="value_field" type="xs:string"/>
@@ -224,15 +257,55 @@
         <xs:attribute name="minimum_integers" type="xs:integer"/>
         <xs:attribute name="minimum_symbols" type="xs:integer"/>
         <xs:attribute name="minimum_uppercase" type="xs:integer"/>
+        <xs:attribute name="validate" type="validateType"/>
     </xs:complexType>
-
-    <xs:simpleType name="spaceSeparated">
-        <xs:pattern value="^[\d\w\s]*$"/>
+    
+    <xs:simpleType name="disableType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="separator"/>
+        </xs:restriction>
     </xs:simpleType>
+    
+    
+    <xs:simpleType name="validateType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="url"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="extensionType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="com_[\w]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="cssClassType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z-]*"></xs:pattern>
+            <!-- todo w3c valid css classname \.-?[_a-zA-Z-]+[_a-zA-Z0-9-]*\s* add also repeition with space classname-->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="helpType">
+        <xs:attribute name="key" use="required" type="helpKeyType"/>
+    </xs:complexType>
+    
+    <xs:simpleType name="helpKeyType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z_]*"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    
 
     <xs:simpleType name="clientType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"></xs:documentation>
+            <xs:documentation xml:lang="en">The client attribute allows you to specify for which application client the new module is available.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="site"/>
@@ -259,6 +332,9 @@
     </xs:simpleType>
 
     <xs:simpleType name="fieldType">
+        <xs:union memberTypes="fieldTypeEnum fieldTypeAnyString"/>
+    </xs:simpleType>
+    <xs:simpleType name="fieldTypeEnum">
         <xs:annotation>
             <xs:documentation xml:lang="en"></xs:documentation>
         </xs:annotation>
@@ -266,6 +342,7 @@
             <xs:enumeration value="accesslevel"/>
             <xs:enumeration value="cachehandler"/>
             <xs:enumeration value="calendar"/>
+            <xs:enumeration value="category"/> 
             <xs:enumeration value="checkbox"/>
             <xs:enumeration value="checkboxes"/>
             <xs:enumeration value="color"/>
@@ -297,9 +374,13 @@
             <xs:enumeration value="hidden"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="fieldTypeAnyString">
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xs:complexType mixed="true" name="option">
-        <xs:attribute name="value" use="required" type="xs:NMTOKEN"/>
+    <xs:complexType mixed="true" name="optionType">
+        <xs:attribute name="value" use="required" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="sql">
@@ -316,6 +397,7 @@
     </xs:element>
 
     <xs:complexType mixed="true" name="file">
+        <xs:attribute name="plugin" use="optional" type="xs:NCName"/>
         <xs:attribute name="charset" use="required" type="xs:NCName"/>
         <xs:attribute name="driver" use="required" type="xs:NCName"/>
         <xs:attribute name="folder" type="xs:NCName"/>
@@ -339,6 +421,9 @@
     </xs:complexType>
 
     <xs:complexType name="folder">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Specify a directory in the ZIP package to copy from. This will copy an entire folder at once</xs:documentation>
+        </xs:annotation>
         <xs:simpleContent>
             <xs:extension base="xs:string"></xs:extension>
         </xs:simpleContent>
@@ -349,7 +434,7 @@
             <xs:element name="filename" type="filename" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="folder" type="folder" minOccurs="0" maxOccurs="unbounded"/>
         </xs:all>
-        <xs:attribute name="destination" use="required" type="xs:string"/>
+        <xs:attribute name="destination" use="optional" type="xs:string"/>
         <xs:attribute name="folder" use="optional" type="xs:string"/>
     </xs:complexType>
 
@@ -502,7 +587,7 @@
 
     <xs:simpleType name="validateEmail">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Za-z0-9_]+([-+.'][A-Za-z0-9_]+)*@[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*\.[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*"/>
+            <xs:pattern value="N/A||[A-Za-z0-9_]+([-+.'][A-Za-z0-9_]+)*@[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*\.[A-Za-z0-9_]+([-.][A-Za-z0-9_]+)*"/>
         </xs:restriction>
     </xs:simpleType>
 

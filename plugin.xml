@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.6" type="plugin" group="system" method="upgrade"
+<extension xsi:noNamespaceSchemaLocation="../../plugin.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  version="1.6" type="plugin" group="system" method="upgrade"
 	xsi:noNamespaceSchemaLocation="./plugin.xsd" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<name>System - Alpha</name>

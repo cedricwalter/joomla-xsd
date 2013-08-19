@@ -16,6 +16,7 @@
                 <xs:element name="creationDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="description" type="xs:normalizedString"/>
 
+                <xs:element name="menu" type="menu" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="installfile" type="xs:normalizedString" minOccurs="0" maxOccurs="1">
                     <xs:annotation>
                         <xs:documentation xml:lang="en">Deprecated in 1.6</xs:documentation>

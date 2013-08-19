@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension xsi:noNamespaceSchemaLocation="../../plugin.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  version="1.6" type="plugin" group="content" method="upgrade">
+    <name>Content - socialsharing live</name>
+    <creationDate>14 April 2011</creationDate>
+    <author>Cedric Walter</author>
+    <authorEmail>cedric.walter@gmail.com</authorEmail>
+    <authorUrl>http://www.waltercedric.com</authorUrl>
+    <copyright>Cedric Walter</copyright>
+    <license>GNU/GPL 3,0</license>
+    <description><![CDATA[
+
+<p>This
+small plugin add automatically to any article a set of social icons
+that let your reader increase your social ranking.</p>
+<p>Choose
+which buttons to show and where to show them in your Joomla
+com_content. Include or exclude specific articles, sections or
+categories.&nbsp;Your visitors still stay on your site, so you do not
+loose visitors to other sites.&nbsp;</p>
+<p><a href="http://wiki.waltercedric.com/index.php?title=SocialSharing">More
+documentation</a><br>
+</p>
+
+]]>
+    </description>
+    <version>3.1.5</version>
+
+
+    <files>
+        <filename plugin="socialsharinglive">socialsharinglive.php</filename>
+        <filename plugin="socialsharinglive">index.html</filename>
+        <folder>language</folder>
+    </files>
+
+    <media destination="plg_content_socialsharinglive" folder="media/plg_content_socialsharinglive">
+        <folder>plg_content_socialsharinglive</folder>
+    </media>
+
+    <!-- Note: No spaces or linebreaks allowed between the server tags -->
+    <updateservers>
+		<server type="extension" priority="1" name="Extension Update Site">http://updates.waltercedric.com/plugins/socialsharinglive/extension.xml</server>
+		<server type="collection" priority="2" name="Collection Update Site">http://updates.waltercedric.com/update.xml</server>
+	</updateservers>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field name="categoryId" type="category" extension="com_content"
+                       required="true"
+                       multiple="true" size="10" default="" label="JCATEGORY"
+                       description="JFIELD_CATEGORY_DESC">
+                    <option value="">JOPTION_ALL_CATEGORIES</option>
+                </field>
+
+                <field name="showFrontpage" type="radio" default="0"
+                       label="Show on frontpage"
+                       description="Show toolbar in frontpage">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="showInIntro" type="radio" default="1"
+                       label="Show in Text introduction"
+                       description="Show in Text introduction">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="position" type="list" default="1" label="Position"
+                       description="position">
+                    <option value="0">Before content text articles</option>
+                    <option value="1">After content text articles</option>
+                </field>
+                <field name="style" type="list" default="left.css" label="style"
+                       description="style">
+                    <option value="floating.css">floating.css</option>
+                    <option value="left.css">left.css</option>
+                    <option value="right.css">right.css</option>
+                    <option value="horizontal-left-full.css"
+                            >horizontal-left-full.css
+                    </option>
+                    <option value="horizontal-left.css"
+                            >horizontal-left.css
+                    </option>
+                    <option value="horizontal-right-full.css"
+                            >horizontal-right-full.css
+                    </option>
+                    <option value="horizontal-right.css"
+                            >horizontal-right.css
+                    </option>
+                </field>
+
+            </fieldset>
+            <fieldset name="Google" label="Google+">
+
+                <field name="googlePlusVisible" type="radio" default="1"
+                       label="Google+" description="Google+ Visible">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+
+                <field name="googlePlusSize" type="list"
+                       default="tall" label="Button style size"
+                       description="LinkedIn button style">
+                    <option value="small">Small (15px)</option>
+                    <option value="medium">Medium (20px)</option>
+                    <option value="">Standard (24px)</option>
+                    <option value="tall">Tall (60px)</option>
+                </field>
+
+            </fieldset>
+
+            <fieldset name="Stumbleupon" label="Stumbleupon">
+                <field name="stumbleuponVisible" type="radio" default="1"
+                       label="Stumbleupon" description="Stumbleupon Visible">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="stumbleuponSize" type="list"
+                       default="5" label="Button style size"
+                       description="Stumbleupon button style">
+                    <option value="1">Small box</option>
+                    <option value="2">Small box rounded</option>
+                    <option value="3">Small nobox</option>
+                    <option value="5">badge</option>
+                    <option value="6">circle big</option>
+                    <option value="4">circle small</option>
+                </field>
+
+
+            </fieldset>
+
+
+            <fieldset name="Xing" label="Xing">
+                <field name="xingVisible" type="radio" default="1"
+                       label="Xing" description="Xing Visible">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+
+                <field name="xingSize" type="list"
+                       default="64" label="Button style size"
+                       description="Xing button style">
+                    <option value="64">64×64 Pixel.</option>
+                    <option value="32">32×32 Pixel.</option>
+                    <option value="16">16x16 Pixel.</option>
+                </field>
+
+                <field name="xingTitle" type="text" default='Share with your Xing network.'
+                       label="Xing title"
+                       description="title wenn mouse over button, for example 'Share with your Xing network.'">
+                </field>
+                <!--
+                <field name="googlePlusCount" type="radio" default="1"
+					label="Include Count" description="Include Count">
+					<option value="1">Yes</option>
+					<option value="0">No</option>
+				</field>
+                -->
+
+            </fieldset>
+            <fieldset name="LinkedIn" label="LinkedIn">
+
+                <field name="linkedInVisible" type="radio" default="1"
+                       label="LinkedIn" description="facebook Visible">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+
+                <field name="linkedInButton" type="list"
+                       default="VerticalCount" label="LinkedIn button style"
+                       description="LinkedIn button style">
+                    <option value="VerticalCount">Vertical count</option>
+                    <option value="HorizontalCount">Horizontal count</option>
+                    <option value="NoCount">No count</option>
+                </field>
+
+            </fieldset>
+            <fieldset name="Facebook" label="Facebook">
+
+                <field name="facebookWidth" type="text" default='450'
+                       label="Width"
+                       description="The width of the Like button.">
+                </field>
+
+                <field name="facebookVisible" type="radio" default="1"
+                       label="Facebook" description="facebook Visible">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+
+                <field name="facebookButton" type="list" default=""
+                       label="Facebook button" description="facebook button">
+                    <option value="">Standard</option>
+                    <option value="data-layout='button_count'">button_count</option>
+                    <option value="data-layout='box_count'">box_count</option>
+                </field>
+
+                <field name="facebookColorScheme" type="list" default=" "
+                       label="Colorscheme" description="colorscheme - the color scheme for the like button. Options: 'light', 'dark'">
+                    <option value=" ">Standard</option>
+                    <option value="">Light</option>
+                    <option value="data-colorscheme='dark'">Dark</option>
+                </field>
+
+                <field name="facebookSend" type="radio" default="data-send='true'"
+                        label="Send Button" description="Specifies whether to include a Send button with the Like button.">
+                     <option value="data-send='true'">Yes</option>
+                     <option value="data-send='false'">No</option>
+                 </field>
+
+                <field name="facebookVerb" type="radio" default=" "
+                        label="Verb to display" description="Verb to display on the button. Options: 'like', 'recommend'">
+                     <option value=" ">Like</option>
+                     <option value="data-action='recommend'">Recommend</option>
+                 </field>
+
+                <field name="facebookFaces" type="radio" default=" "
+                       label="Show faces" description="Show profile pictures when two or more friends like this. (standard layout only). Default is Yes.">
+                    <option value=" ">Yes</option>
+                    <option value="data-show-faces='false'">No</option>
+                </field>
+
+            </fieldset>
+            <fieldset name="Digg" label="Digg">
+
+                <field name="diggVisible" type="radio" default="1" label="Digg"
+                       description="Digg">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+                <field name="diggButton" type="list" default="DiggMedium"
+                       label="Digg button style" description="digg button style">
+                    <option value="DiggWide">DiggWide</option>
+                    <option value="DiggMedium">DiggMedium</option>
+                    <option value="DiggCompact">DiggCompact</option>
+                    <option value="DiggIcon">DiggIcon</option>
+                </field>
+
+            </fieldset>
+            <fieldset name="Twitter" label="Twitter">
+
+                <field name="twitterVisible" type="radio" default="1"
+                       label="Twitter" description="twitter is visible">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </field>
+
+                <field name="twitterName" type="text"
+                       default="your twitter name" label="Twitter via"
+                       description="Twitter via"></field>
+
+                <field name="twitterLocale" type="list" default="en"
+                       label="locale" description="locale">
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="ja">Japanese</option>
+                    <option value="es">Spanish</option>
+                </field>
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>
