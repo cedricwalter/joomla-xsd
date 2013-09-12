@@ -8,6 +8,14 @@
 	<packagerurl>http://www.sammoffatt.com.au</packagerurl>
 	<description>Joomla! Installer Sample and Test Package.</description>
 	<update>http://update.joomla.org/update/packages/everything</update>
+	
+	<scriptfile>file.script.php</scriptfile> 
+	
+	<updateservers>
+		<server type="extension" priority="1" name="Extension Update Site">http://jsitepoint.com/update/package/everything/extension.xml</server>
+		<server type="collection" priority="2" name="Collection Update Site">http://jsitepoint.com/update/update.xml</server>
+	</updateservers>
+	
 	<files folder="packages">
 		<file type="library" 	id="lib_alpha" >lib_alpha.zip</file>
 		<file type="component" 	id="com_alpha" >com_alpha.zip</file>

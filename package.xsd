@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <xs:include schemaLocation="./common.xsd"/>
-
+  
   <xs:element name="extension">
     <xs:complexType>
       <xs:all>
@@ -13,7 +13,8 @@
         <xs:element name="packager" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="packagerurl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
         <xs:element name="description" type="xs:normalizedString"/>
-
+        <xs:element name="scriptfile" type="validScript" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="updateservers" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="files" minOccurs="0" maxOccurs="1"/>
         <xs:element name="update" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
       </xs:all>

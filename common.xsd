@@ -98,8 +98,30 @@
         </xs:restriction>
     </xs:simpleType>
     
+    <xs:simpleType name="copyrightType">
+        <xs:union memberTypes="copyrightCustomType copyrightListType"/>
+    </xs:simpleType>
+    <xs:simpleType name="copyrightCustomType">
+        <xs:restriction base="xs:string">
+        </xs:restriction> 
+    </xs:simpleType>
+    <xs:simpleType name="copyrightListType">
+        <xs:restriction base="xs:string">
+            <!--
+            <xs:enumeration value="(C)  Open Source Matters. All rights reserved."/>
+            <xs:enumeration value="Copyright (c) [year] [fullname]"/>
+            <xs:enumeration value="(C) 2005 - 2013 Open Source Matters. All rights reserved."/>
+            <xs:enumeration value="(C) 2005 - 2013 Open Source Matters. All rights reserved."/>
+            <xs:enumeration value="latin-name"/>
+            -->
+        </xs:restriction>
+    </xs:simpleType>
+    
 
     <xs:complexType name="administration">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">The administration section is defined in this element. Since only components apply to both the site and the administrator, only component manifests can include this element.</xs:documentation>
+        </xs:annotation>        
         <xs:all>
             <xs:element name="menu" type="menu" minOccurs="0" maxOccurs="1"/>
             <xs:element name="submenu" type="submenu"  minOccurs="0" maxOccurs="1"/>
@@ -110,6 +132,10 @@
 
 
     <xs:element name="updateservers">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">This element may contain one or more server element, each describing a location to fetch updates from.
+            </xs:documentation>
+        </xs:annotation> 
         <xs:complexType mixed="true">
             <xs:sequence>
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="server"/>
@@ -117,22 +143,41 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="server">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">This element define one server to fetch updates from.
+            </xs:documentation>
+        </xs:annotation> 
         <xs:complexType>
             <xs:simpleContent>
                 <xs:extension base="xs:anyURI">
-                    <xs:attribute name="name" use="required"/>
-                    <xs:attribute name="priority" use="required" type="xs:integer"/>
+                    <xs:attribute name="name" use="required" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">The name of the update server.</xs:documentation>
+                        </xs:annotation> 
+                    </xs:attribute>
+                    <xs:attribute name="priority" use="required" type="priorityType"/>
                     <xs:attribute name="type" use="required" type="serverTypeType"/>
                 </xs:extension>
             </xs:simpleContent>
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="serverTypeType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">The update server type.</xs:documentation>
+        </xs:annotation> 
         <xs:restriction base="xs:string">
             <xs:enumeration value="extension"/>
             <xs:enumeration value="collection"/>
         </xs:restriction>
-    </xs:simpleType>   
+    </xs:simpleType> 
+    <xs:simpleType name="priorityType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">The priority of the update server.</xs:documentation>
+        </xs:annotation> 
+        <xs:restriction base="xs:integer">
+        </xs:restriction>
+    </xs:simpleType> 
+    
 
     <xs:complexType name="update">
         <xs:sequence>
@@ -158,6 +203,10 @@
     </xs:element>
 
     <xs:complexType name="languagesType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">This tag is considered to be deprecated since Joomla! 1.6. We encourage you to put extension 's language files in the extension folder and Joomla! is responsible for the loading of required language files.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="language" type="languageType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -174,6 +223,10 @@
 
 
     <xs:complexType name="config">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">describes the configuration options for the extension. If applicable, the options will be shown by the appropriate Manager (Plugin Manager, Module Manager or Template Manager). Configuration options can also be defined in a separate file named config.xml. Its root element should be config.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="fields" type="fields" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>

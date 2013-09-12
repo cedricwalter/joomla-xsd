@@ -17,17 +17,7 @@
                 <xs:element name="description" type="xs:normalizedString"/>
 
                 <xs:element name="menu" type="menu" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="installfile" type="xs:normalizedString" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                        <xs:documentation xml:lang="en">Deprecated in 1.6</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element name="uninstallfile" type="xs:normalizedString" minOccurs="0" maxOccurs="1">
-                    <xs:annotation>
-                        <xs:documentation xml:lang="en">Deprecated in 1.6</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-
+ 
                 <xs:element name="scriptfile" type="validScript" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="install" type="sql" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="uninstall" type="sql" minOccurs="0" maxOccurs="1"/>

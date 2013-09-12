@@ -19,8 +19,6 @@
 	<description>COM_ALPHA_XML_DESCRIPTION</description>
 
 	<!-- Installer Hooks -->
-	<installfile>file.install.php</installfile> <!-- Deprecated in 1.6 -->
-	<uninstallfile>file.uninstall.php</uninstallfile> <!-- Deprecated in 1.6 -->
 	<scriptfile>file.script.php</scriptfile> <!-- New in 1.6 -->
 
 	<!-- SQL Files -->
@@ -110,7 +108,7 @@
                     rows="8" cols="40"/>
             	<field name="tagIds" required="true" type="text" default="" label="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_TAGSFORSELECTION_DESC" size="60"/>
                 <field name="sorting" type="list" default="1" label="MOD_CEDCUSTOMTAGSCLOUD_SORTING_LABEL" description="MOD_CEDCUSTOMTAGSCLOUD_SORTING_DESC"
-                	class="btn-group">
+                	class="btn-group .blue .bigger">
                     <option value="tag_latestasort">By Latest created</option>
                     <option value="tag_alphasort">MOD_CEDCUSTOMTAGSCLOUD_SORTING_VALUE1</option>
                     <option value="sizeasort">MOD_CEDCUSTOMTAGSCLOUD_SORTING_VALUE2</option>
